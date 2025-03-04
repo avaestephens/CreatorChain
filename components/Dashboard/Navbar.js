@@ -1,284 +1,25 @@
-// // import React from 'react';
-// // import styled from 'styled-components';
-// // import Link from 'next/link';
-// // import { logOut } from '@/backend/Auth';
-// // import { useStateContext } from '@/context/StateContext';
-// // import Home from '@/components/Dashboard/HomeTemplate';
-
-// // const Navbar = () => {
-// //   const { setUser } = useStateContext();
-
-// //   return (
-// //     <Nav>
-// //       {/* Logo on the left side */}
-
-// //       <LogoContainer>
-// //         <LogoImage src="/images/psufs-logo.png" alt="Logo" />
-// //         <Link href="/" passHref>
-// //           <Logo onClick={() => logOut(setUser)}>PSU Figure Skating </Logo>
-// //         </Link>
-// //       </LogoContainer>
-      
-// //       <NavLinks>
-        
-// //         <Link href="/dashboard" passHref>
-// //           <NavItem>Home</NavItem>
-// //         </Link>
-// //         <Link href="/our-team" passHref>
-// //           <NavItem>Our Team</NavItem>
-// //         </Link>
-// //         <Link href="/schedule" passHref>
-// //           <NavItem>Schedule</NavItem>
-// //         </Link>
-// //         <Link href="/contact" passHref>
-// //           <NavItem>Contact</NavItem>
-// //         </Link>
-// //         <Link href="/social-media" passHref>
-// //           <NavItem>Social Media</NavItem>
-// //         </Link>
-// //         <Link href="/auth/signup" passHref>
-// //           <ButtonLink>Sign Up</ButtonLink>
-// //         </Link>
-// //         <Link href="/auth/login" passHref>
-// //           <ButtonLink>Login</ButtonLink>
-// //         </Link>
-// //       </NavLinks>
-// //     </Nav>
-// //   );
-// // };
-
-// // const Nav = styled.nav`
-// //   display: flex;
-// //   justify-content: space-between;
-// //   align-items: center;
-// //   padding: 1rem 2rem;
-// //   background-color: #041e42; /* PSU Navy Blue */
-// //   color: white;
-// //   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-// // `;
-
-// // const LogoContainer = styled.div`
-// //   display: flex;
-// //   align-items: center;
-// // `;
-
-// // const Logo = styled.a`
-// //   font-size: 1.5rem;
-// //   font-weight: bold;
-// //   color: #ffffff; /* white */
-// //   cursor: pointer;
-// //   text-decoration: none;
-// //   &:hover {
-// //     color: #ffdd44;
-// //   }
-// // `;
-
-// // const NavLinks = styled.div`
-// //   display: flex;
-// //   gap: 1rem;
-// // `;
-
-// // const NavItem = styled.a`
-// //   color: white;
-// //   text-decoration: none;
-// //   font-weight: bold;
-// //   padding: 0.5rem 1rem;
-// //   transition: background-color 0.3s ease;
-  
-// //   &:hover {
-// //     background-color: #6c757d; /* PSU Grey */
-// //     border-radius: 5px;
-// //   }
-// // `;
-
-// // const ButtonLink = styled.a`
-// //   padding: 0.5rem 1rem;
-// //   background-color: #ffffff; /* white */
-// //   color: black;
-// //   border-radius: 5px;
-// //   text-decoration: none;
-// //   font-weight: bold;
-// //   transition: background 0.3s ease;
-  
-// //   &:hover {
-// //     background-color: #ffdd44;
-// //   }
-  
-// // `;
-
-// // // Logo image positioned on the left side
-// // const LogoImage = styled.img`
-// //   height:80px;
-// //   width: auto;
-// // `;
-
-
-// // export default Navbar;
-
-
-
-// import React, { useState } from 'react';
-// import styled from 'styled-components';
-// import Link from 'next/link';
-// import { logOut } from '@/backend/Auth';
-// import { useStateContext } from '@/context/StateContext';
-// import { FaBars, FaTimes } from 'react-icons/fa'; // Icons for hamburger and close buttons
-
-// const Navbar = () => {
-//   const { setUser } = useStateContext();
-//   const [isMenuOpen, setIsMenuOpen] = useState(false); // State for the hamburger menu toggle
-
-//   const toggleMenu = () => {
-//     setIsMenuOpen(!isMenuOpen);
-//   };
-
-//   return (
-//     <Nav>
-//       <LogoContainer>
-//         <LogoImage src="/images/lionhead.png" alt="Logo" />
-//         <Link href="/" passHref>
-//           <Logo onClick={() => logOut(setUser)}>PSU Figure Skating</Logo>
-//         </Link>
-//       </LogoContainer>
-
-//       <HamburgerIcon onClick={toggleMenu}>
-//         {isMenuOpen ? <FaTimes /> : <FaBars />} {/* Hamburger icon for mobile */}
-//       </HamburgerIcon>
-
-//       <NavLinks isOpen={isMenuOpen}>
-//         <Link href="/dashboard" passHref>
-//           <NavItem>Home</NavItem>
-//         </Link>
-//         <Link href="/our-team" passHref>
-//           <NavItem>Our Team</NavItem>
-//         </Link>
-//         <Link href="/schedule" passHref>
-//           <NavItem>Schedule</NavItem>
-//         </Link>
-//         <Link href="/contact" passHref>
-//           <NavItem>Contact</NavItem>
-//         </Link>
-//         <Link href="/social-media" passHref>
-//           <NavItem>Social Media</NavItem>
-//         </Link>
-//         <Link href="/auth/signup" passHref>
-//           <ButtonLink>Sign Up</ButtonLink>
-//         </Link>
-//         <Link href="/auth/login" passHref>
-//           <ButtonLink>Login</ButtonLink>
-//         </Link>
-//       </NavLinks>
-//     </Nav>
-//   );
-// };
-
-// const Nav = styled.nav`
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-//   padding: 1rem 2rem;
-//   background-color: #041e42; /* PSU Navy Blue */
-//   color: white;
-//   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-//   width: 100%; /* Ensure full-width */
-//   max-width: 1200px; /* Limit width on large screens */
-//   margin: 0 auto; /* Center the navbar */
-//   position: relative;
-//   box-sizing: border-box; /* Prevent any unwanted margins from overflowing */
-// `;
-
-// const LogoContainer = styled.div`
-//   display: flex;
-//   align-items: center;
-// `;
-
-// const Logo = styled.a`
-//   font-size: 1.5rem;
-//   font-weight: bold;
-//   color: #ffffff; /* white */
-//   cursor: pointer;
-//   text-decoration: none;
-//   &:hover {
-//     color: #ffdd44;
-//   }
-// `;
-
-// const NavLinks = styled.div`
-//   display: flex;
-//   gap: 1rem;
-//   align-items: center;
-//   @media (max-width: 768px) {
-//     flex-direction: column;
-//     position: absolute;
-//     top: 70px;
-//     right: 20px;
-//     background-color: #041e42;
-//     width: 200px;
-//     padding: 1rem;
-//     border-radius: 5px;
-//     display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')};
-//     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Add some shadow to make the menu pop */
-//   }
-// `;
-
-// const NavItem = styled.a`
-//   color: white;
-//   text-decoration: none;
-//   font-weight: bold;
-//   padding: 0.5rem 1rem;
-//   transition: background-color 0.3s ease;
-
-//   &:hover {
-//     background-color: #6c757d; /* PSU Grey */
-//     border-radius: 5px;
-//   }
-// `;
-
-// const ButtonLink = styled.a`
-//   padding: 0.5rem 1rem;
-//   background-color: #ffffff; /* white */
-//   color: black;
-//   border-radius: 5px;
-//   text-decoration: none;
-//   font-weight: bold;
-//   transition: background 0.3s ease;
-
-//   &:hover {
-//     background-color: #ffdd44;
-//   }
-// `;
-
-// const HamburgerIcon = styled.div`
-//   display: none;
-//   font-size: 2rem;
-//   color: #ffffff;
-//   cursor: pointer;
-//   @media (max-width: 768px) {
-//     display: block;
-//   }
-// `;
-
-// const LogoImage = styled.img`
-//   height: 80px;
-//   width: auto;
-// `;
-
-// export default Navbar;
-
 
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Link from 'next/link';
-import { logOut } from '@/backend/Auth';
+import { useRouter } from 'next/router';
+import { logOut } from '@/backend/Auth'; // Assuming logOut is imported from Auth
 import { useStateContext } from '@/context/StateContext';
 import { FaBars, FaTimes } from 'react-icons/fa'; // Icons for hamburger and close buttons
+import Link from 'next/link'; // Correct Link import
+import Dashboard from "@/components/LandingPage/Home"
 
 const Navbar = () => {
   const { setUser } = useStateContext();
   const [isMenuOpen, setIsMenuOpen] = useState(false); // State for the hamburger menu toggle
+  const router = useRouter(); // Using Next.js router to handle navigation
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleLogoClick = () => {
+    logOut(setUser); 
+    router.push('/'); // Redirect to home page after logout
   };
 
   return (
@@ -286,17 +27,15 @@ const Navbar = () => {
       <NavContainer>
         <LogoContainer>
           <LogoImage src="/images/lionhead.png" alt="Logo" />
-          <Link href="/" passHref>
-            <Logo onClick={() => logOut(setUser)}>PSU Figure Skating</Logo>
-          </Link>
+          <Logo onClick={handleLogoClick}>PSU Figure Skating</Logo>
         </LogoContainer>
 
         <HamburgerIcon onClick={toggleMenu}>
           {isMenuOpen ? <FaTimes /> : <FaBars />} {/* Hamburger menu */}
         </HamburgerIcon>
 
-        <NavLinks isOpen={isMenuOpen}>
-          <Link href="/dashboard" passHref>
+        <NavLinks $isOpen={isMenuOpen}>
+          <Link href="/" passHref>
             <NavItem>Home</NavItem>
           </Link>
           <Link href="/our-team" passHref>
@@ -308,7 +47,7 @@ const Navbar = () => {
           <Link href="/contact" passHref>
             <NavItem>Contact</NavItem>
           </Link>
-          <Link href="/social-media" passHref>
+          <Link href="/members-only" passHref>
             <NavItem>Social Media</NavItem>
           </Link>
           <Link href="/auth/signup" passHref>
@@ -352,10 +91,6 @@ const LogoContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 15px; /* Adds space between logo and text */
-
-  @media (max-width: 1024px) {
-    gap: 10px;
-  }
 `;
 
 const Logo = styled.a`
@@ -390,7 +125,7 @@ const NavLinks = styled.div`
     box-shadow: -4px 4px 10px rgba(0, 0, 0, 0.2);
     padding: 1rem;
     border-radius: 5px;
-    display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')};
+    display: ${({ $isOpen }) => ($isOpen ? 'flex' : 'none')}; /* Fix isOpen prop */
     align-items: center;
   }
 `;

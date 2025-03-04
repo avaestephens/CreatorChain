@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
 import Navbar from '@/components/Dashboard/Navbar'
-import Footer from "@/components/LandingPage/Footer"
+//import Footer from "@/components/LandingPage/Footer"
 //import PhotoUploader from '@/components/PhotoUploader'
 import { useStateContext } from '@/context/StateContext'
 import { getAllUserPhotos } from '@/backend/Database'
@@ -114,20 +114,6 @@ return (
 )
 }
 
-
-//STYLED COMPONENTS
-// const Section = styled.section`
-// width: 100%
-// height: 100vh;
-// display: flex;
-// justify-content: center;
-// `
-
-
-// const TopHeader = styled.h1`
-// font-size: 20px;
-// display: flexbox;
-// `
 const Section = styled.section`
   width: 100%;
   height: 100vh;
@@ -148,7 +134,7 @@ const Header = styled.header`
 
 const Banner = styled.div`
   background-color: #0f3068    ; /* PSU Blue */
-  padding: 20px 0;
+  padding: 8px 0;
 `
 
 const Title = styled.h1`
@@ -250,14 +236,6 @@ const CardButton = styled.a`
   }
 `
 
-// const Footer = styled.footer`
-//   width: 100%;
-//   background-color: #041e42;
-//   color: white;
-//   padding: 20px 0;
-//   margin-top: 40px;
-//   text-align: center;
-// `
 
 const SocialLinks = styled.div`
   display: flex;
@@ -278,4 +256,55 @@ const SocialButton = styled.a`
     background-color: #ffdd44;
   }
 `
+
+const Footer = styled.footer`
+  width: 100%;
+  background-color: #041e42;
+  color: white;
+  padding: 40px 0;
+  margin-top: auto;
+`
+
+const FooterContent = styled.div`
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+`
+
+const FooterLogo = styled.div`
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+`
+
+const FooterAddress = styled.div`
+  font-size: 1rem;
+  margin-bottom: 20px;
+  line-height: 1.5;
+`
+
+const FooterLinks = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+`
+
+const FooterLink = styled.a`
+  color: white;
+  text-decoration: none;
+  font-size: 0.9rem;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+`
+
+const FooterCopyright = styled.div`
+  font-size: 0.9rem;
+  color: #ccc;
+`
+
+
 export default Dashboard

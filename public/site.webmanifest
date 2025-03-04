@@ -1,0 +1,23 @@
+
+  {
+    "name": "PSU Figure Skating",
+    "short_name": "PSUFS",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#041e42",
+    "theme_color": "#041e42",
+    "icons": [
+      {
+        "src": "/favicon_package/favicon-32x32.png",
+        "sizes": "32x32",
+        "type": "image/png"
+      },
+      {
+        "src": "/favicon_package/favicon-16x16.png",
+        "sizes": "16x16",
+        "type": "image/png"
+      }
+    ]
+  }
+  
+  

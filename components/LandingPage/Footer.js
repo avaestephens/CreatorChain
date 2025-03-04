@@ -10,7 +10,7 @@ const Footer = () => {
           © {new Date().getFullYear()} PSUFS
         </LeftContainer>
         <CenterContainer>
-          <Link href="#">Privacy Policy</Link> | <Link href="#">Terms of Service</Link>
+          <Link href="#">https://www.psu.edu/web-privacy-statement</Link> | <Link href="https://www.psu.edu/legal-statements">Terms of Service</Link>
         </CenterContainer>
         <RightContainer>
           <SocialIcon href="#" aria-label="Facebook">

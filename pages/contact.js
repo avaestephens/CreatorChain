@@ -150,13 +150,12 @@ const Contact = () => {
       <Header>
         <Banner>
           <Title>Contact Us</Title>
-          <Subtitle>Get in Touch with Penn State Figure Skating</Subtitle>
         </Banner>
       </Header>
 
       <MainContent>
         <ContactInfo>
-          <h2>Connect With Us</h2>
+          <h2>Get in Touch with PSUFS</h2>
           <p>
             We'd love to hear from you! Whether you're interested in joining the team, 
             have questions about our events, or just want to learn more about figure skating 
@@ -173,7 +172,7 @@ const Contact = () => {
                 <strong>General Inquiries:</strong> psufigureskating@psu.edu
               </ContactDetail>
               <ContactDetail>
-                <strong>Club President:</strong> president.psufigureskating@psu.edu
+                <strong>Club President:</strong> aes6592@psu.edu
               </ContactDetail>
               <ContactDetail>
                 <strong>Vice President:</strong> vp.psufigureskating@psu.edu
@@ -191,7 +190,7 @@ const Contact = () => {
                 <strong>Club Office:</strong> (814) 555-1234
               </ContactDetail>
               <ContactDetail>
-                <strong>Ice Pavilion:</strong> (814) 555-5678
+                <strong>Pegula Ice Arena:</strong> (814) 555-5678
               </ContactDetail>
             </ContactDetails>
           </ContactMethod>
@@ -203,11 +202,11 @@ const Contact = () => {
             <ContactDetails>
               <ContactTitle>Practice Location</ContactTitle>
               <ContactDetail>
-                <strong>Penn State Ice Pavilion</strong>
+                <strong>Pegula Ice Arena</strong>
                 <br />
                 University Park, PA 16802
                 <br />
-                <LocationLink href="https://maps.google.com" target="_blank">
+                <LocationLink href="https://maps.app.goo.gl/jiURBRdSVyA88TT49" target="_blank">
                   View on Map
                 </LocationLink>
               </ContactDetail>
@@ -409,7 +408,7 @@ const Header = styled.header`
 
 const Banner = styled.div`
   background-color: #0f3068; /* PSU Blue */
-  padding: 20px 0;
+  padding: 8px 0;
 `
 
 const Title = styled.h1`

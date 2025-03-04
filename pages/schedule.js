@@ -13,7 +13,6 @@ const Schedule = () => {
       <Header>
         <Banner>
           <Title>Schedule</Title>
-          <Subtitle>Practices, Events & Competitions</Subtitle>
         </Banner>
       </Header>
 
@@ -39,25 +38,25 @@ const Schedule = () => {
                 <td>Monday</td>
                 <td>6:00 PM - 8:00 PM</td>
                 <td>Team Practice</td>
-                <td>PSU Ice Pavilion</td>
+                <td>Pegula Ice Arena</td>
               </tr>
               <tr>
                 <td>Wednesday</td>
                 <td>5:30 PM - 7:30 PM</td>
                 <td>Freestyle & Choreography</td>
-                <td>PSU Ice Pavilion</td>
+                <td>Pegula Ice Arena</td>
               </tr>
               <tr>
                 <td>Friday</td>
                 <td>7:00 AM - 9:00 AM</td>
                 <td>Technical Skills</td>
-                <td>PSU Ice Pavilion</td>
+                <td>Pegula Ice Arena</td>
               </tr>
               <tr>
                 <td>Saturday</td>
                 <td>10:00 AM - 12:00 PM</td>
                 <td>Open Practice</td>
-                <td>PSU Ice Pavilion</td>
+                <td>Pegula Ice Arena</td>
               </tr>
             </tbody>
           </ScheduleTable>
@@ -80,7 +79,7 @@ const Schedule = () => {
           </p>
 
           <EventCard>
-            <EventDate>March 5-7, 2023</EventDate>
+            <EventDate>March 5-7, 2025</EventDate>
             <EventTitle>Eastern Sectional Intercollegiate Competition</EventTitle>
             <EventLocation>Cornell University, Ithaca, NY</EventLocation>
             <EventDescription>
@@ -90,9 +89,9 @@ const Schedule = () => {
           </EventCard>
 
           <EventCard>
-            <EventDate>April 10, 2023</EventDate>
+            <EventDate>April 10, 2025</EventDate>
             <EventTitle>Penn State Figure Skating Spring Exhibition</EventTitle>
-            <EventLocation>PSU Ice Pavilion</EventLocation>
+            <EventLocation>Pegula Ice Arena </EventLocation>
             <EventDescription>
               Join us for our end-of-year showcase featuring performances from all team members.
               Friends and family are welcome to attend! Admission is free for PSU students.
@@ -100,7 +99,7 @@ const Schedule = () => {
           </EventCard>
 
           <EventCard>
-            <EventDate>April 22-24, 2023</EventDate>
+            <EventDate>April 22-24, 2025</EventDate>
             <EventTitle>U.S. Collegiate Championship</EventTitle>
             <EventLocation>University of Denver, CO</EventLocation>
             <EventDescription>
@@ -110,7 +109,7 @@ const Schedule = () => {
           </EventCard>
 
           <EventCard>
-            <EventDate>May 1, 2023</EventDate>
+            <EventDate>May 1, 2025</EventDate>
             <EventTitle>End of Year Team Banquet</EventTitle>
             <EventLocation>Nittany Lion Inn</EventLocation>
             <EventDescription>
@@ -131,23 +130,6 @@ const Schedule = () => {
           Subscribe to Google Calendar
         </CalendarButton>
       </CalendarSection>
-
-      <JoinTraining>
-        <h2>Interested in Joining Our Team?</h2>
-        <p>
-          We welcome skaters of all levels, from beginners to competitive athletes!
-          Come to our info session at the beginning of the semester or reach out to us for more information.
-        </p>
-        <ButtonGroup>
-          <Link href="/tryouts" passHref>
-            <PrimaryButton>Tryout Information</PrimaryButton>
-          </Link>
-          <Link href="/hi" passHref>
-            <SecondaryButton>Contact Us</SecondaryButton>
-          </Link>
-        </ButtonGroup>
-      </JoinTraining>
-
       <Footer>
         <SocialLinks>
           <Link href="/social-media" passHref>
@@ -181,7 +163,7 @@ const Header = styled.header`
 
 const Banner = styled.div`
   background-color: #0f3068; /* PSU Blue */
-  padding: 20px 0;
+  padding: 8px 0;
 `
 
 const Title = styled.h1`
