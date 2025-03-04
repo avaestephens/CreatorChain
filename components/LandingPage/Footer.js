@@ -10,16 +10,16 @@ const Footer = () => {
           © {new Date().getFullYear()} PSUFS
         </LeftContainer>
         <CenterContainer>
-          <Link href="#">https://www.psu.edu/web-privacy-statement</Link> | <Link href="https://www.psu.edu/legal-statements">Terms of Service</Link>
+          <Link href="https://www.psu.edu/web-privacy-statement">Privacy Policy</Link> | <Link href="https://www.psu.edu/legal-statements">Terms of Service</Link>
         </CenterContainer>
         <RightContainer>
-          <SocialIcon href="#" aria-label="Facebook">
+          <SocialIcon href="https://www.facebook.com/PSUFigureSkating/" aria-label="Facebook">
             <FaFacebook />
           </SocialIcon>
-          <SocialIcon href="#" aria-label="Twitter">
+          <SocialIcon href="https://x.com/pennstatefs" aria-label="Twitter">
             <FaTwitter />
           </SocialIcon>
-          <SocialIcon href="#" aria-label="Instagram">
+          <SocialIcon href="https://www.instagram.com/psufigureskating/" aria-label="Instagram">
             <FaInstagram />
           </SocialIcon>
         </RightContainer>
@@ -88,7 +88,7 @@ const Link = styled.a`
   text-decoration: none;
   font-weight: bold;
   &:hover {
-    color: #ffdd44; /* PSU Yellow */
+    color: #cccccc; /* PSU Blue */
   }
 `;
 
@@ -97,7 +97,7 @@ const SocialIcon = styled.a`
   font-size: 1.5rem;
   text-decoration: none;
   &:hover {
-    color: #ffdd44; /* PSU Yellow */
+    color: #cccccc; /* PSU Blue */
   }
 `;
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
 import Navbar from '@/components/Dashboard/Navbar'
+import Footer from "@/components/LandingPage/Footer"
 import { useStateContext } from '@/context/StateContext'
 import { FaInstagram, FaTiktok, FaEnvelope, FaMapMarkerAlt, FaPhone } from 'react-icons/fa'
 
@@ -367,21 +368,6 @@ const Contact = () => {
       </TeamMembersSection>
 
       <Footer>
-        <FooterContent>
-          <FooterLogo>Penn State Figure Skating</FooterLogo>
-          <FooterAddress>
-            Penn State University<br />
-            University Park, PA 16802
-          </FooterAddress>
-          <FooterLinks>
-            <FooterLink href="/privacy-policy">Privacy Policy</FooterLink>
-            <FooterLink href="/terms">Terms of Use</FooterLink>
-            <FooterLink href="/accessibility">Accessibility</FooterLink>
-          </FooterLinks>
-          <FooterCopyright>
-            © {new Date().getFullYear()} Penn State Figure Skating Club. All rights reserved.
-          </FooterCopyright>
-        </FooterContent>
       </Footer>
     </Section>
   )
@@ -811,53 +797,7 @@ const MemberEmail = styled.a`
   }
 `
 
-const Footer = styled.footer`
-  width: 100%;
-  background-color: #041e42;
-  color: white;
-  padding: 40px 0;
-  margin-top: auto;
-`
 
-const FooterContent = styled.div`
-  width: 80%;
-  margin: 0 auto;
-  text-align: center;
-`
 
-const FooterLogo = styled.div`
-  font-size: 1.8rem;
-  font-weight: bold;
-  margin-bottom: 15px;
-`
-
-const FooterAddress = styled.div`
-  font-size: 1rem;
-  margin-bottom: 20px;
-  line-height: 1.5;
-`
-
-const FooterLinks = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-`
-
-const FooterLink = styled.a`
-  color: white;
-  text-decoration: none;
-  font-size: 0.9rem;
-  
-  &:hover {
-    text-decoration: underline;
-  }
-`
-
-const FooterCopyright = styled.div`
-  font-size: 0.9rem;
-  color: #ccc;
-`
 
 export default Contact

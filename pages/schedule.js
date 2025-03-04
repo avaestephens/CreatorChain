@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
 import Navbar from '@/components/Dashboard/Navbar'
+import Footer from "@/components/LandingPage/Footer"
 import { useStateContext } from '@/context/StateContext'
 
 const Schedule = () => {
@@ -131,11 +132,6 @@ const Schedule = () => {
         </CalendarButton>
       </CalendarSection>
       <Footer>
-        <SocialLinks>
-          <Link href="/social-media" passHref>
-            <SocialButton>Follow Us on Social Media</SocialButton>
-          </Link>
-        </SocialLinks>
       </Footer>
     </Section>
   )
@@ -414,35 +410,6 @@ const SecondaryButton = styled.a`
   &:hover {
     background-color: white;
     color: #041e42;
-  }
-`
-
-const Footer = styled.footer`
-  width: 100%;
-  background-color: #041e42;
-  color: white;
-  padding: 20px 0;
-  margin-top: 40px;
-  text-align: center;
-`
-
-const SocialLinks = styled.div`
-  display: flex;
-  justify-content: center;
-`
-
-const SocialButton = styled.a`
-  background-color: #ffffff;
-  color: black;
-  padding: 10px 20px;
-  border-radius: 5px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background 0.3s ease;
-  margin-top: 10px;
-
-  &:hover {
-    background-color: #ffdd44;
   }
 `
 

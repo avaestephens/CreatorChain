@@ -48,7 +48,7 @@ const Navbar = () => {
             <NavItem>Contact</NavItem>
           </Link>
           <Link href="/members-only" passHref>
-            <NavItem>Social Media</NavItem>
+            <NavItem>Members</NavItem>
           </Link>
           <Link href="/auth/signup" passHref>
             <ButtonLink>Sign Up</ButtonLink>
