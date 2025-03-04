@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
 import Navbar from '@/components/Dashboard/Navbar'
+import Footer from "@/components/LandingPage/Footer"
 //import PhotoUploader from '@/components/PhotoUploader'
 import { useStateContext } from '@/context/StateContext'
 import { getAllUserPhotos } from '@/backend/Database'
@@ -42,32 +43,12 @@ const Dashboard = () => {
 
   })
 
-
-
-//   return (
-//     <Section>
-//       <TopHeader>
-//         Penn State Figure Skating
-//       </TopHeader>
-//       <p> Ava is {age} years old</p>
-//       <button onClick={() => updateAge() }>It's my birthday</button>
-//       <button onClick={() => updateAge() }>Lost a year</button>
-//       {
-//         !data ? <></> : <p>This is the data: {data}</p>
-//       }
-
-
-//     </Section>
-//   )
-// }
-
 return (
   <Section>
     <Navbar />
     <Header>
       <Banner>
-        <Title>Penn State Figure Skating</Title>
-        <Subtitle>Team, Schedule, and More</Subtitle>
+        <Title>Penn  State  Figure  Skating</Title>
       </Banner>
     </Header>
 
@@ -154,6 +135,7 @@ const Section = styled.section`
   flex-direction: column;
   align-items: center;
   background-color: #f4f4f4;
+  padding-top: 80px; /* Adjust based on navbar height */
 `
 
 const Header = styled.header`
@@ -165,7 +147,7 @@ const Header = styled.header`
 `
 
 const Banner = styled.div`
-  background-color: #1a3c7f; /* PSU Blue */
+  background-color: #0f3068    ; /* PSU Blue */
   padding: 20px 0;
 `
 
@@ -268,14 +250,14 @@ const CardButton = styled.a`
   }
 `
 
-const Footer = styled.footer`
-  width: 100%;
-  background-color: #041e42;
-  color: white;
-  padding: 20px 0;
-  margin-top: 40px;
-  text-align: center;
-`
+// const Footer = styled.footer`
+//   width: 100%;
+//   background-color: #041e42;
+//   color: white;
+//   padding: 20px 0;
+//   margin-top: 40px;
+//   text-align: center;
+// `
 
 const SocialLinks = styled.div`
   display: flex;

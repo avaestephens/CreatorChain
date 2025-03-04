@@ -167,6 +167,8 @@ const Section = styled.section`
   flex-direction: column;
   align-items: center;
   background-color: #f4f4f4;
+  padding-top: 80px; /* Adjust based on navbar height */
+  padding-bottom: 80px; /* Adjust based on navbar height */
 `
 
 const Header = styled.header`
@@ -178,7 +180,7 @@ const Header = styled.header`
 `
 
 const Banner = styled.div`
-  background-color: #1a3c7f; /* PSU Blue */
+  background-color: #0f3068; /* PSU Blue */
   padding: 20px 0;
 `
 
@@ -293,7 +295,7 @@ const EventCard = styled.div`
   
   &:last-child {
     border-bottom: none;
-    margin-bottom: 0;
+    margin-bottom: 80px;
     padding-bottom: 0;
   }
 `
