@@ -175,9 +175,6 @@ const Contact = () => {
               <ContactDetail>
                 <strong>Club President:</strong> aes6592@psu.edu
               </ContactDetail>
-              <ContactDetail>
-                <strong>Vice President:</strong> vp.psufigureskating@psu.edu
-              </ContactDetail>
             </ContactDetails>
           </ContactMethod>
 
@@ -345,25 +342,20 @@ const Contact = () => {
         
         <TeamMembers>
           <TeamMember>
-            <MemberPhoto src="/api/placeholder/150/150" alt="Team President" />
+            <MemberPhoto src="/images/exec-members/president.jpg" alt="Team President" />
             <MemberName>Ava Stephens</MemberName>
             <MemberRole>Team President</MemberRole>
             <MemberEmail>aes6592@psu.edu</MemberEmail>
           </TeamMember>
           
           <TeamMember>
-            <MemberPhoto src="/api/placeholder/150/150" alt="Vice President" />
+            <MemberPhoto src="/images/exec-members/vp.jpg" alt="Vice President" />
             <MemberName>Maegen Manning</MemberName>
             <MemberRole>Vice President</MemberRole>
             <MemberEmail>mjm@psu.edu</MemberEmail>
           </TeamMember>
           
-          <TeamMember>
-            <MemberPhoto src="/api/placeholder/150/150" alt="Recruitment Coordinator" />
-            <MemberName>Sophia Martinez</MemberName>
-            <MemberRole>Recruitment Coordinator</MemberRole>
-            <MemberEmail>sophia.martinez@psu.edu</MemberEmail>
-          </TeamMember>
+          
         </TeamMembers>
       </TeamMembersSection>
 
@@ -784,7 +776,7 @@ const MemberName = styled.h3`
 const MemberRole = styled.p`
   font-size: 1rem;
   color: #666;
-  margin-bottom: 5px;
+  margin-bottom: 2px;
 `
 
 const MemberEmail = styled.a`

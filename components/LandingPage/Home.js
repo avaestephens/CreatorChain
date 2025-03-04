@@ -52,24 +52,14 @@ return (
       </Banner>
     </Header>
 
+
     {/* Team Description Section */}
     <TeamDescription>
-        <h2>About Our Team</h2>
-        <p>
-          The Penn State Figure Skating Team is a vibrant and dedicated group of skaters offering both competitive and recreational opportunities for Penn State students.
-        </p>
-        <p>
-          During the academic year, our team competes in regional figure skating competitions, with the goal of qualifying for the National Collegiate Figure Skating Championship. We participate in events including freestyle, solo dance, and team maneuvers.
-        </p>
-        <p>
-          In addition to competitions, we host several showcases at our home rink, providing skaters with the opportunity to perform in front of family, friends, and the Penn State community. These performances celebrate the talents and achievements of our team.
-        </p>
-        <p>
-          Our team practices twice a week at the Penn State Ice Rink, where skaters hone their skills, build friendships, and work towards improving both individually and as a team.
-        </p>
-        <p>
-          We are proud to have experienced coaching staff who help our skaters reach their fullest potential both on and off the ice.
-        </p>
+    <TeamImage src="/images/team.jpg" alt="President" />
+        <h2>Our Mission</h2>
+        {
+        <p>Since 1994, the Penn State Figure Skating Team has grown immensely in membership and dedication. The Team's mission is to provide a student skating community for those interested in pursuing the sport recreationally and competitively. We strive to encourage competition, leadership, friendship, and improvement in skating skills. Additionally, our members participate in weekly social events off the ice. Figure skating exercises both the mind and body, and we strive to translate our strengths from skating to our education as Penn State students.</p>
+       }
         <Link href="/our-team" passHref>
           <StyledButton>Learn More About Our Team</StyledButton>
         </Link>
@@ -147,6 +137,14 @@ const Subtitle = styled.h2`
   font-size: 1.5rem;
   font-weight: 300;
 `
+
+const TeamImage = styled.img`
+  border-radius: 1%;
+  width: 600px;
+  height: 400px;
+  object-fit: cover;
+  margin-bottom: 20px;
+`;
 
 const TeamDescription = styled.section`
   width: 80%;

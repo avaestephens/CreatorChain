@@ -21,7 +21,7 @@ const Schedule = () => {
         <PracticeSchedule>
           <h2>Regular Practice Schedule</h2>
           <p>
-            Join us for our regular practice sessions at the Penn State Ice Pavilion.
+            Join us for our regular practice sessions at the Penn State Pegula Ice Arena.
             All team members are encouraged to attend as many sessions as possible.
           </p>
 
