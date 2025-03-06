@@ -37,6 +37,7 @@ const FooterSection = styled.footer`
   align-items: center;
   box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1); /* subtle shadow */
   width: 100%; /* Ensure it spans the entire width of the screen */
+  margin-top: 30px;
 `;
 
 const FooterContainer = styled.div`

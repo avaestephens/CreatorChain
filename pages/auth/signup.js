@@ -1,101 +1,3 @@
-// import React, { useState } from 'react'
-// import styled from 'styled-components'
-// import { useRouter } from 'next/router'
-// import { useStateContext } from '@/context/StateContext'
-// import { isEmailInUse, register} from '@/backend/Auth'
-// import Link from 'next/link'
-// import Navbar from '@/components/Dashboard/Navbar'
-// const Signup = () => {
-
-//   const { user, setUser } = useStateContext()
-//   const [ email, setEmail ] = useState('')
-//   const [ password, setPassword ] = useState('')
-
-//   const router = useRouter()
-
-//   async function validateEmail(){
-//     const emailRegex = /^[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-//     if(emailRegex.test(email) == false ){
-//         return false;
-//     }
-//     console.log('so far so good...')
-//     const emailResponse = await isEmailInUse(email)
-//     console.log('email response', emailResponse)
-//     if(emailResponse.length == 0 ){
-//         return false;
-//     }
-
-//     return true;
-// }
-
-//   async function handleSignup(){
-//     const isValidEmail = await validateEmail()
-//     // console.log('isValidEmail', isValidEmail)
-//     // if(!isValidEmail){ return; }
-    
-//     try{
-//         await register(email, password, setUser)
-//         router.push('/dashboard')
-//     }catch(err){
-//         console.log('Error Signing Up', err)
-//     }
-//   }
-
-
-//   return (
-//     <>
-//     <Navbar/>
-//     <Section>
-//         <Header>Signup</Header>
-//         <InputTitle>Email</InputTitle>
-//         <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-//         <InputTitle>Password</InputTitle>
-//         <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-
-//         <UserAgreementText>By signing in, you automatically agree to our <UserAgreementSpan href='/legal/terms-of-use' rel="noopener noreferrer" target="_blank"> Terms of Use</UserAgreementSpan> and <UserAgreementSpan href='/legal/privacy-policy' rel="noopener noreferrer" target="_blank">Privacy Policy.</UserAgreementSpan></UserAgreementText>
-
-//         <MainButton onClick={handleSignup}>Signup</MainButton>
-
-//     </Section>
-//     </>
-//   )
-// }
-
-// const Section = styled.section`
-//   display: flex;
-// `;
-
-// const Header = styled.h1`
-//   font-size: 24px; /* Adjusted for better scalability */
-// `;
-
-// const Input = styled.input`
-//   font-size: 16px;
-
-// `;
-
-// const InputTitle = styled.label` /* Changed to label for semantics */
-//   font-size: 14px;
-// `;
-
-// const MainButton = styled.button`
-//   font-size: 16px;
-
-// `;
-
-// const UserAgreementText = styled.p`
-//   font-size: 12px;
-// `;
-
-// const UserAgreementSpan = styled(Link)` 
-//   color: #007bff;
-
-// `;
-
-
-// export default Signup
-
-
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
@@ -103,14 +5,13 @@ import { useStateContext } from '@/context/StateContext'
 import { isEmailInUse, register } from '@/backend/Auth'
 import Link from 'next/link'
 import Navbar from '@/components/Dashboard/Navbar'
-//import { register } from '@/backend/Auth'; // Import from backend/Auth.js
-
 
 const Signup = () => {
   const { setUser } = useStateContext()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
   async function validateEmail() {
@@ -120,9 +21,15 @@ const Signup = () => {
       return false
     }
 
-    const emailResponse = await isEmailInUse(email)
-    if (emailResponse.length === 0) {
-      setError('This email is already in use.')
+    try {
+      const isInUse = await isEmailInUse(email)
+      if (isInUse) {
+        setError('This email is already in use.')
+        return false
+      }
+    } catch (err) {
+      console.error('Error checking email:', err)
+      setError('Error checking email. Please try again.')
       return false
     }
 
@@ -130,17 +37,51 @@ const Signup = () => {
     return true
   }
 
+  function validatePassword() {
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters long.')
+      return false
+    }
+    return true
+  }
+
   async function handleSignup() {
     setError('') // Clear previous errors
-    const isValidEmail = await validateEmail()
-    if (!isValidEmail) return
-
+    setIsLoading(true)
+    
     try {
+      const isValidEmail = await validateEmail()
+      if (!isValidEmail) {
+        setIsLoading(false)
+        return
+      }
+      
+      const isValidPassword = validatePassword()
+      if (!isValidPassword) {
+        setIsLoading(false)
+        return
+      }
+
       await register(email, password, setUser)
-      router.push('/dashboard')
+      router.push('/members-only')
     } catch (err) {
-      console.log('Error Signing Up', err)
-      setError('Error signing up. Please try again.')
+      console.error('Error Signing Up', err)
+      
+      // More specific error messages based on Firebase error codes
+      if (err.code === 'auth/email-already-in-use') {
+        setError('This email is already in use.')
+      } else if (err.code === 'auth/weak-password') {
+        setError('Password is too weak. Please use at least 6 characters.')
+      } else if (err.code === 'auth/invalid-email') {
+        setError('Invalid email format.')
+      } else if (err.code?.includes('api-key-not-valid')) {
+        setError('Firebase configuration error. Please contact support.')
+        console.error('Firebase API Key not valid. Check your environment variables.')
+      } else {
+        setError('Error signing up. Please try again.')
+      }
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -161,6 +102,7 @@ const Signup = () => {
           <InputGroup>
             <InputLabel>Password</InputLabel>
             <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <PasswordHint>Password must be at least 6 characters long</PasswordHint>
           </InputGroup>
 
           <AgreementText>
@@ -169,7 +111,9 @@ const Signup = () => {
             <AgreementLink href='https://www.psu.edu/web-privacy-statement' target="_blank">Privacy Policy</AgreementLink>.
           </AgreementText>
 
-          <SignupButton onClick={handleSignup}>Create Account</SignupButton>
+          <SignupButton onClick={handleSignup} disabled={isLoading}>
+            {isLoading ? 'Creating Account...' : 'Create Account'}
+          </SignupButton>
 
           <LoginRedirect>
             Already have an account? <Link href="/auth/login" passHref><LoginLink>Log in</LoginLink></Link>
@@ -186,9 +130,9 @@ const Section = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Full height */
-  background-color: #f4f4f4; /* Light background */
-  padding-top: 80px; /* Adjust based on navbar height */
+  min-height: 100vh;
+  background-color: #f4f4f4;
+  padding: 80px 20px;
 `
 
 const FormContainer = styled.div`
@@ -204,7 +148,7 @@ const FormContainer = styled.div`
 const Header = styled.h1`
   font-family: 'Fugaz One', sans-serif;
   font-size: 2rem;
-  color: #041e42; /* PSU Navy */
+  color: #041e42;
   margin-bottom: 20px;
 `
 
@@ -242,6 +186,12 @@ const Input = styled.input`
   }
 `
 
+const PasswordHint = styled.span`
+  font-size: 0.75rem;
+  color: #666;
+  margin-top: 4px;
+`
+
 const AgreementText = styled.p`
   font-size: 0.8rem;
   color: #555;
@@ -270,9 +220,10 @@ const SignupButton = styled.button`
   width: 100%;
   margin-top: 20px;
   transition: background 0.3s ease;
+  opacity: ${props => props.disabled ? 0.7 : 1};
 
   &:hover {
-    background: #1a3c7f;
+    background: ${props => props.disabled ? '#041e42' : '#1a3c7f'};
   }
 `
 
