@@ -1,34 +1,3 @@
-// import { useEffect } from 'react';
-// import { useRouter } from 'next/router';
-// import { useStateContext } from '@/context/StateContext';
-// import { auth } from '@/firebaseConfig'; // Firebase import
-
-// const PrivateRoute = ({ children }) => {
-//   const { user } = useStateContext(); // Get the user from context
-//   const router = useRouter();
-
-//   useEffect(() => {
-//     const unsubscribe = auth.onAuthStateChanged((user) => {
-//       if (!user) {
-//         // Redirect to login if user is not logged in
-//         router.push('/auth/login');
-//       }
-//     });
-
-//     return () => unsubscribe(); // Cleanup on unmount
-//   }, [user, router]);
-
-//   if (!user) {
-//     return <p>Loading...</p>; // Show loading spinner or message while checking auth state
-//   }
-
-//   return children; // Render the protected page content
-// };
-
-// export default PrivateRoute;
-
-
-// backend/PrivateRoute.js
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useStateContext } from '@/context/StateContext';
@@ -38,18 +7,21 @@ const PrivateRoute = ({ children }) => {
   const router = useRouter();
 
   useEffect(() => {
-    // If not loading and no user is found, redirect to login
-    if (!loading && !user) {
-      router.push('/auth/login');
+    // Wait until authentication state is determined
+    if (!loading) {
+      // If no user is logged in, redirect to login
+      if (!user) {
+        router.push('/auth/login');
+      }
     }
   }, [user, loading, router]);
 
-  // Show loading state or nothing while checking authentication
+  // Show nothing while checking auth or redirecting
   if (loading || !user) {
     return <div>Loading...</div>;
   }
 
-  // If we have a user, render the protected content
+  // If we have a user, render the protected component
   return children;
 };
 

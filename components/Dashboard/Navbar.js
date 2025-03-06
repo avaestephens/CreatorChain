@@ -1,12 +1,11 @@
-
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
-import { logOut } from '@/backend/Auth'; // Assuming logOut is imported from Auth
 import { useStateContext } from '@/context/StateContext';
 import { FaBars, FaTimes } from 'react-icons/fa'; // Icons for hamburger and close buttons
 import Link from 'next/link'; // Correct Link import
-import Dashboard from "@/components/LandingPage/Home"
+import { auth } from '@/backend/Firebase'; // Import Firebase auth directly
+import { signOut } from 'firebase/auth'; // Import signOut from firebase/auth
 
 const Navbar = () => {
   const { setUser } = useStateContext();
@@ -17,9 +16,15 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleLogoClick = () => {
-    logOut(setUser); 
-    router.push('/'); // Redirect to home page after logout
+  // Fixed logout function implementation
+  const handleLogoClick = async () => {
+    try {
+      await signOut(auth); // Use Firebase's signOut function directly
+      setUser(null); // Update user state
+      router.push('/auth/login'); // Redirect to home page after logout
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
   };
 
   return (

@@ -45,6 +45,47 @@ const Signup = () => {
     return true
   }
 
+  // async function handleSignup() {
+  //   setError('') // Clear previous errors
+  //   setIsLoading(true)
+    
+  //   try {
+  //     const isValidEmail = await validateEmail()
+  //     if (!isValidEmail) {
+  //       setIsLoading(false)
+  //       return
+  //     }
+      
+  //     const isValidPassword = validatePassword()
+  //     if (!isValidPassword) {
+  //       setIsLoading(false)
+  //       return
+  //     }
+
+  //     await register(email, password, setUser)
+  //     router.push('/members-only')
+  //   } catch (err) {
+  //     console.error('Error Signing Up', err)
+      
+  //     // More specific error messages based on Firebase error codes
+  //     if (err.code === 'auth/email-already-in-use') {
+  //       setError('This email is already in use.')
+  //     } else if (err.code === 'auth/weak-password') {
+  //       setError('Password is too weak. Please use at least 6 characters.')
+  //     } else if (err.code === 'auth/invalid-email') {
+  //       setError('Invalid email format.')
+  //     } else if (err.code?.includes('api-key-not-valid')) {
+  //       setError('Firebase configuration error. Please contact support.')
+  //       console.error('Firebase API Key not valid. Check your environment variables.')
+  //     } else {
+  //       setError('Error signing up. Please try again.')
+  //     }
+  //   } finally {
+  //     setIsLoading(false)
+  //   }
+  // }
+
+
   async function handleSignup() {
     setError('') // Clear previous errors
     setIsLoading(true)
@@ -61,9 +102,15 @@ const Signup = () => {
         setIsLoading(false)
         return
       }
-
-      await register(email, password, setUser)
-      router.push('/members-only')
+  
+      // Register the user
+      const user = await register(email, password, setUser)
+      console.log("User registered successfully:", user.uid)
+      
+      // Use a short timeout to ensure state updates complete
+      setTimeout(() => {
+        router.push('/members-only')
+      }, 500)
     } catch (err) {
       console.error('Error Signing Up', err)
       
@@ -84,6 +131,9 @@ const Signup = () => {
       setIsLoading(false)
     }
   }
+
+
+
 
   return (
     <>
