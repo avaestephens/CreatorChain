@@ -140,7 +140,7 @@ const OurTeam = () => {
           <h2>Interested in Joining Our Team?</h2>
           <p>We welcome skaters of all levels, from beginners to competitive athletes! If you're interested in joining the team, please reach out to us for more information.</p>
           <ButtonGroup>
-            <Link href="/tryouts" passHref legacyBehavior>
+            <Link href="https://forms.gle/LEMc9XvVMTsGxPLj8" passHref legacyBehavior>
               <SecondaryButton>Tryout Information</SecondaryButton>
             </Link>
             <Link href="/contact" passHref legacyBehavior>
