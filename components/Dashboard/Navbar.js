@@ -35,25 +35,25 @@ const Navbar = () => {
         </HamburgerIcon>
 
         <NavLinks $isOpen={isMenuOpen}>
-          <Link href="/" passHref>
+          <Link href="/" passHref legacyBehavior>
             <NavItem>Home</NavItem>
           </Link>
-          <Link href="/our-team" passHref>
+          <Link href="/our-team" passHref legacyBehavior>
             <NavItem>Our Team</NavItem>
           </Link>
-          <Link href="/schedule" passHref>
+          <Link href="/schedule" passHref legacyBehavior>
             <NavItem>Schedule</NavItem>
           </Link>
-          <Link href="/contact" passHref>
+          <Link href="/contact" passHref legacyBehavior>
             <NavItem>Contact</NavItem>
           </Link>
-          <Link href="/members-only" passHref>
+          <Link href="/members-only" passHref legacyBehavior>
             <NavItem>Members</NavItem>
           </Link>
-          <Link href="/auth/signup" passHref>
+          <Link href="/auth/signup" passHref legacyBehavior>
             <ButtonLink>Sign Up</ButtonLink>
           </Link>
-          <Link href="/auth/login" passHref>
+          <Link href="/auth/login" passHref legacyBehavior>
             <ButtonLink>Login</ButtonLink>
           </Link>
         </NavLinks>

@@ -3,9 +3,7 @@ import styled from 'styled-components'
 import Link from 'next/link'
 import Navbar from '@/components/Dashboard/Navbar'
 import Footer from "@/components/LandingPage/Footer"
-//import PhotoUploader from '@/components/PhotoUploader'
 import { useStateContext } from '@/context/StateContext'
-import { getAllUserPhotos } from '@/backend/Database'
 import { flexbox } from '@mui/system'
 import { useRouter } from 'next/router'
 
@@ -60,7 +58,7 @@ return (
         {
         <p>Since 1994, the Penn State Figure Skating Team has grown immensely in membership and dedication. The Team's mission is to provide a student skating community for those interested in pursuing the sport recreationally and competitively. We strive to encourage competition, leadership, friendship, and improvement in skating skills. Additionally, our members participate in weekly social events off the ice. Figure skating exercises both the mind and body, and we strive to translate our strengths from skating to our education as Penn State students.</p>
        }
-        <Link href="/our-team" passHref>
+        <Link href="/our-team" passHref legacyBehavior>
           <StyledButton>Learn More About Our Team</StyledButton>
         </Link>
       </TeamDescription>
@@ -71,7 +69,7 @@ return (
         <CardText>
           The Penn State Figure Skating Team is a passionate group of skaters...
         </CardText>
-        <Link href="/our-team" passHref>
+        <Link href="/our-team" passHref legacyBehavior>
           <CardButton>Meet the Team</CardButton>
         </Link>
       </Card>
@@ -79,7 +77,7 @@ return (
       <Card>
         <CardTitle>Schedule</CardTitle>
         <CardText>Check out our upcoming practices and events...</CardText>
-        <Link href="/schedule" passHref>
+        <Link href="/schedule" passHref legacyBehavior>
           <CardButton>View Schedule</CardButton>
         </Link>
       </Card>
@@ -87,7 +85,7 @@ return (
       <Card>
         <CardTitle>Contact Us</CardTitle>
         <CardText>Get in touch with us for more information...</CardText>
-        <Link href="/contact" passHref>
+        <Link href="/contact" passHref legacyBehavior>
           <CardButton>Contact Us</CardButton>
         </Link>
       </Card>
@@ -95,7 +93,7 @@ return (
 
     <Footer>
       <SocialLinks>
-        <Link href="/social-media" passHref>
+        <Link href="/social-media" passHref legacyBehavior>
           <SocialButton>Follow Us on Social Media</SocialButton>
         </Link>
       </SocialLinks>
