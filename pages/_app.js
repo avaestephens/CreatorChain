@@ -6,6 +6,7 @@ import { StateContext } from "@/context/StateContext"
 import { createGlobalStyle } from 'styled-components'
 import '../styles/global.css';
 
+
 export const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
