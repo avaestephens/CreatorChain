@@ -1,4 +1,4 @@
-// components/TikTokEmbed.js
+
 import React, { useEffect, useRef } from 'react';
 
 const TikTokEmbed = ({ videoId }) => {

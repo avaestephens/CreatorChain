@@ -1,7 +1,6 @@
 import { google } from 'googleapis';
 
-// Your Google Calendar credentials
-// These should be stored in environment variables for security
+// Google Calendar credentials
 const GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY;
 const GOOGLE_CLIENT_EMAIL = process.env.GOOGLE_CLIENT_EMAIL;
 const GOOGLE_CALENDAR_ID = process.env.GOOGLE_CALENDAR_ID;

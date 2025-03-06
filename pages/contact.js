@@ -66,40 +66,6 @@ const Contact = () => {
     fetchInstagramFeed();
   }, []);
 
-  // useEffect(() => {
-  //   const fetchTikTokFeed = async () => {
-  //     try {
-  //       const response = await fetch('/api/tiktok');
-  //       if (!response.ok) throw new Error('Failed to fetch TikTok feed');
-  //       const data = await response.json();
-  //       setTiktokFeed(data);
-  //       setLoading(false);
-  //     } catch (err) {
-  //       console.error('Error fetching TikTok feed:', err);
-  //       setError('Failed to load TikTok content');
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchTikTokFeed();
-  // }, []);
-
-
-  // useEffect(() => {
-  //   const fetchTikTokVideos = async () => {
-  //     try {
-  //       const response = await fetch('/api/tiktok');
-  //       const data = await response.json();
-  //       setVideos(data);
-  //     } catch (error) {
-  //       console.error('Failed to fetch TikTok videos:', error);
-  //     }
-  //   };
-
-  //   fetchTikTokVideos();
-  // }, []);
-
-
 
 
   useEffect(() => {
