@@ -5,28 +5,34 @@ import Navbar from '@/components/Dashboard/Navbar'
 import Footer from "@/components/LandingPage/Footer"
 import { useStateContext } from '@/context/StateContext'
 import { FaInstagram, FaTiktok, FaEnvelope, FaMapMarkerAlt, FaPhone } from 'react-icons/fa'
+import TikTokEmbed from '@/components/TikTokEmbed' 
+
+
+
 
 const Contact = () => {
-  const { user } = useStateContext()
-  
-  // State for social media feeds
-  const [instagramFeed, setInstagramFeed] = useState([])
-  const [tiktokFeed, setTiktokFeed] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const { user } = useStateContext();
+
+  const [tiktokVideos, setTiktokVideos] = useState([]);
+  //const [loading, setLoading] = useState(true);
+
+  const [instagramFeed, setInstagramFeed] = useState([]);
+  const [tiktokFeed, setTiktokFeed] = useState([]);
+  const [videos, setVideos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     subject: '',
     message: ''
-  })
+  });
 
-  // Fetch Instagram feed
+  const videoIds = ['7430827958723530026'];
+
   useEffect(() => {
     const fetchInstagramFeed = async () => {
       try {
-        // Replace with your actual API endpoint and access token
-        // For development, using sample data
         const sampleData = [
           {
             id: 'post1',
@@ -49,101 +55,104 @@ const Contact = () => {
             permalink: 'https://instagram.com/p/sample3',
             timestamp: '2023-02-05T12:15:00Z'
           }
-        ]
-        setInstagramFeed(sampleData)
+        ];
+        setInstagramFeed(sampleData);
       } catch (err) {
-        console.error('Error fetching Instagram feed:', err)
-        setError('Failed to load Instagram content')
+        console.error('Error fetching Instagram feed:', err);
+        setError('Failed to load Instagram content');
       }
-    }
+    };
 
-    fetchInstagramFeed()
-  }, [])
+    fetchInstagramFeed();
+  }, []);
 
-  // Fetch TikTok feed
+  // useEffect(() => {
+  //   const fetchTikTokFeed = async () => {
+  //     try {
+  //       const response = await fetch('/api/tiktok');
+  //       if (!response.ok) throw new Error('Failed to fetch TikTok feed');
+  //       const data = await response.json();
+  //       setTiktokFeed(data);
+  //       setLoading(false);
+  //     } catch (err) {
+  //       console.error('Error fetching TikTok feed:', err);
+  //       setError('Failed to load TikTok content');
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchTikTokFeed();
+  // }, []);
+
+
+  // useEffect(() => {
+  //   const fetchTikTokVideos = async () => {
+  //     try {
+  //       const response = await fetch('/api/tiktok');
+  //       const data = await response.json();
+  //       setVideos(data);
+  //     } catch (error) {
+  //       console.error('Failed to fetch TikTok videos:', error);
+  //     }
+  //   };
+
+  //   fetchTikTokVideos();
+  // }, []);
+
+
+
+
   useEffect(() => {
-    const fetchTikTokFeed = async () => {
+    const fetchTikTokVideos = async () => {
       try {
-        // Replace with your actual API endpoint
-        // For development, using sample data
-        const sampleData = [
-          {
-            id: 'video1',
-            video_url: '/api/placeholder/180/320',
-            cover_image: '/api/placeholder/180/320',
-            title: 'Learning new jumps! #FigureSkating',
-            share_url: 'https://tiktok.com/@user/video1',
-            created_at: '2023-02-18T14:20:00Z'
-          },
-          {
-            id: 'video2',
-            video_url: '/api/placeholder/180/320',
-            cover_image: '/api/placeholder/180/320',
-            title: 'Behind the scenes at competition #PSUSkating',
-            share_url: 'https://tiktok.com/@user/video2',
-            created_at: '2023-02-12T09:30:00Z'
-          },
-          {
-            id: 'video3',
-            video_url: '/api/placeholder/180/320',
-            cover_image: '/api/placeholder/180/320',
-            title: 'Team bonding night! #PennState',
-            share_url: 'https://tiktok.com/@user/video3',
-            created_at: '2023-02-07T20:45:00Z'
-          }
-        ]
-        setTiktokFeed(sampleData)
-        setLoading(false)
-      } catch (err) {
-        console.error('Error fetching TikTok feed:', err)
-        setError('Failed to load TikTok content')
-        setLoading(false)
+        const response = await fetch('/api/tiktok');
+        if (!response.ok) {
+          throw new Error('Failed to fetch TikTok videos');
+        }
+        const data = await response.json();
+        setTiktokVideos(data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching TikTok videos:', error);
+        setLoading(false);
       }
-    }
+    };
+    
+    fetchTikTokVideos();
+  }, []);
+  
 
-    fetchTikTokFeed()
-  }, [])
+  useEffect(() => {
+  const script = document.createElement('script');
+  script.src = 'https://www.tiktok.com/embed.js';
+  script.async = true;
+  document.body.appendChild(script);
 
-  // Handle form submission
+  return () => {
+    document.body.removeChild(script); // Clean up on unmount
+  };
+}, []);
+
+
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      // In production, replace with actual API call
-      console.log('Submitting form data:', formData)
-      
-      // Example API call:
-      // const response = await fetch('/api/contact', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify(formData),
-      // })
-      
-      // if (response.ok) {
-      //   alert('Message sent successfully!')
-      //   setFormData({ name: '', email: '', subject: '', message: '' })
-      // } else {
-      //   alert('Failed to send message. Please try again.')
-      // }
-
-      // For development
-      alert('Message sent successfully!')
-      setFormData({ name: '', email: '', subject: '', message: '' })
+      console.log('Submitting form data:', formData);
+      alert('Message sent successfully!');
+      setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (err) {
-      console.error('Error submitting form:', err)
-      alert('An error occurred. Please try again later.')
+      console.error('Error submitting form:', err);
+      alert('An error occurred. Please try again later.');
     }
-  }
+  };
 
-  // Handle form input changes
   const handleChange = (e) => {
-    const { id, value } = e.target
-    setFormData(prevData => ({
+    const { id, value } = e.target;
+    setFormData((prevData) => ({
       ...prevData,
       [id]: value
-    }))
-  }
+    }));
+  };
 
   return (
     <Section>
@@ -158,8 +167,8 @@ const Contact = () => {
         <ContactInfo>
           <h2>Get in Touch with PSUFS</h2>
           <p>
-            We'd love to hear from you! Whether you're interested in joining the team, 
-            have questions about our events, or just want to learn more about figure skating 
+            We'd love to hear from you! Whether you're interested in joining the team,
+            have questions about our events, or just want to learn more about figure skating
             at Penn State, please don't hesitate to reach out.
           </p>
 
@@ -169,12 +178,8 @@ const Contact = () => {
             </IconWrapper>
             <ContactDetails>
               <ContactTitle>Email</ContactTitle>
-              <ContactDetail>
-                <strong>General Inquiries:</strong> psufigureskating@psu.edu
-              </ContactDetail>
-              <ContactDetail>
-                <strong>Club President:</strong> aes6592@psu.edu
-              </ContactDetail>
+              <ContactDetail><strong>General Inquiries:</strong> psufigureskating@psu.edu</ContactDetail>
+              <ContactDetail><strong>Club President:</strong> aes6592@psu.edu</ContactDetail>
             </ContactDetails>
           </ContactMethod>
 
@@ -184,12 +189,8 @@ const Contact = () => {
             </IconWrapper>
             <ContactDetails>
               <ContactTitle>Phone</ContactTitle>
-              <ContactDetail>
-                <strong>Club Office:</strong> (814) 555-1234
-              </ContactDetail>
-              <ContactDetail>
-                <strong>Pegula Ice Arena:</strong> (814) 555-5678
-              </ContactDetail>
+              <ContactDetail><strong>Club Office:</strong> (814) 555-1234</ContactDetail>
+              <ContactDetail><strong>Pegula Ice Arena:</strong> (814) 555-5678</ContactDetail>
             </ContactDetails>
           </ContactMethod>
 
@@ -200,13 +201,9 @@ const Contact = () => {
             <ContactDetails>
               <ContactTitle>Practice Location</ContactTitle>
               <ContactDetail>
-                <strong>Pegula Ice Arena</strong>
-                <br />
-                University Park, PA 16802
-                <br />
-                <LocationLink href="https://maps.app.goo.gl/jiURBRdSVyA88TT49" target="_blank">
-                  View on Map
-                </LocationLink>
+                <strong>Pegula Ice Arena</strong><br />
+                University Park, PA 16802<br />
+                <LocationLink href="https://maps.app.goo.gl/jiURBRdSVyA88TT49" target="_blank">View on Map</LocationLink>
               </ContactDetail>
             </ContactDetails>
           </ContactMethod>
@@ -217,153 +214,62 @@ const Contact = () => {
           <Form onSubmit={handleSubmit}>
             <FormGroup>
               <Label htmlFor="name">Your Name</Label>
-              <Input 
-                type="text" 
-                id="name" 
-                placeholder="Enter your name" 
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
+              <Input type="text" id="name" placeholder="Enter your name" value={formData.name} onChange={handleChange} required />
             </FormGroup>
-            
+
             <FormGroup>
               <Label htmlFor="email">Email Address</Label>
-              <Input 
-                type="email" 
-                id="email" 
-                placeholder="Enter your email" 
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
+              <Input type="email" id="email" placeholder="Enter your email" value={formData.email} onChange={handleChange} required />
             </FormGroup>
-            
+
             <FormGroup>
               <Label htmlFor="subject">Subject</Label>
-              <Input 
-                type="text" 
-                id="subject" 
-                placeholder="What is this regarding?" 
-                value={formData.subject}
-                onChange={handleChange}
-                required
-              />
+              <Input type="text" id="subject" placeholder="What is this regarding?" value={formData.subject} onChange={handleChange} required />
             </FormGroup>
-            
+
             <FormGroup>
               <Label htmlFor="message">Message</Label>
-              <TextArea 
-                id="message" 
-                rows="5" 
-                placeholder="Type your message here..." 
-                value={formData.message}
-                onChange={handleChange}
-                required
-              ></TextArea>
+              <TextArea id="message" rows="5" placeholder="Type your message here..." value={formData.message} onChange={handleChange} required></TextArea>
             </FormGroup>
-            
+
             <SubmitButton type="submit">Send Message</SubmitButton>
           </Form>
         </ContactForm>
       </MainContent>
 
-      <SocialSection>
-        <h2>Follow Us on Social Media</h2>
-        <SocialConnectContainer>
-          <SocialConnectItem>
-            <IconWrapper large>
-              <FaInstagram />
-            </IconWrapper>
-            <SocialTitle>@PSUFigureSkating</SocialTitle>
-            <SocialLink href="https://instagram.com/psufigureskating" target="_blank">
-              Follow on Instagram
-            </SocialLink>
-          </SocialConnectItem>
-          
-          <SocialConnectItem>
-            <IconWrapper large>
-              <FaTiktok />
-            </IconWrapper>
-            <SocialTitle>@PSUFigureSkating</SocialTitle>
-            <SocialLink href="https://tiktok.com/@pennstatefs" target="_blank">
-              Follow on TikTok
-            </SocialLink>
-          </SocialConnectItem>
-        </SocialConnectContainer>
-      </SocialSection>
+
+
 
       <SocialFeedsSection>
-        <h2>Latest from Our Social Media</h2>
-        
-        {loading ? (
-          <LoadingMessage>Loading social media feeds...</LoadingMessage>
-        ) : error ? (
-          <ErrorMessage>{error}</ErrorMessage>
-        ) : (
-          <>
-            <FeedContainer>
-              <FeedTitle>
-                <FaInstagram /> Instagram
-              </FeedTitle>
-              <InstagramFeed>
-                {instagramFeed.map(post => (
-                  <InstagramPost key={post.id} href={post.permalink} target="_blank">
-                    <InstagramImage src={post.media_url} alt={post.caption} />
-                    <InstagramCaption>{post.caption}</InstagramCaption>
-                  </InstagramPost>
-                ))}
-              </InstagramFeed>
-            </FeedContainer>
-
-            <FeedContainer>
-              <FeedTitle>
-                <FaTiktok /> TikTok
-              </FeedTitle>
-              <TikTokFeed>
-                {tiktokFeed.map(video => (
-                  <TikTokVideo key={video.id} href={video.share_url} target="_blank">
-                    <TikTokThumbnail src={video.cover_image} alt={video.title} />
-                    <TikTokTitle>{video.title}</TikTokTitle>
-                  </TikTokVideo>
-                ))}
-              </TikTokFeed>
-            </FeedContainer>
-          </>
-        )}
-      </SocialFeedsSection>
-
-      <TeamMembersSection>
-        <h2>Team Contact Representatives</h2>
-        <p>
-          Have questions about joining the team or need specific information? 
-          Reach out to our designated team representatives!
-        </p>
-        
-        <TeamMembers>
-          <TeamMember>
-            <MemberPhoto src="/images/exec-members/president.jpg" alt="Team President" />
-            <MemberName>Ava Stephens</MemberName>
-            <MemberRole>Team President</MemberRole>
-            <MemberEmail>aes6592@psu.edu</MemberEmail>
-          </TeamMember>
+      <h2>Latest from Our Social Media</h2>
+      
+      {loading ? (
+        <LoadingMessage>Loading social media feeds...</LoadingMessage>
+      ) : (
+        <>
+          {/* Instagram feed section */}
           
-          <TeamMember>
-            <MemberPhoto src="/images/exec-members/vp.jpg" alt="Vice President" />
-            <MemberName>Maegen Manning</MemberName>
-            <MemberRole>Vice President</MemberRole>
-            <MemberEmail>mjm@psu.edu</MemberEmail>
-          </TeamMember>
-          
-          
-        </TeamMembers>
-      </TeamMembersSection>
-
-      <Footer>
-      </Footer>
+          <FeedContainer>
+            <FeedTitle><FaTiktok /> Our Latest TikTok</FeedTitle>
+            {tiktokVideos.length > 0 ? (
+              tiktokVideos.map(video => (
+                <div key={video.id} className="tiktok-video-container">
+                  <TikTokEmbed videoId={video.id} />
+                </div>
+              ))
+            ) : (
+              <p>No TikTok videos available</p>
+            )}
+          </FeedContainer>
+        </>
+      )}
+    </SocialFeedsSection>
+      <Footer />
     </Section>
-  )
-}
+  );
+};
+
+
 
 // STYLED COMPONENTS
 const Section = styled.section`
@@ -788,6 +694,18 @@ const MemberEmail = styled.a`
     text-decoration: underline;
   }
 `
+
+// const FeedTitle = styled.h2`
+//   font-size: 1.5rem;
+//   display: flex;
+//   align-items: center;
+//   gap: 0.5rem;
+// `;
+
+const VideoContainer = styled.div`
+  margin-bottom: 2rem;
+`;
+
 
 
 
