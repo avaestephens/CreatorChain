@@ -1,5 +1,5 @@
-import MembersOnly from '../components/MembersOnly';
-import PrivateRoute from '@/components/PrivateRoute';
+import MembersOnly from '/pages/members-only';
+import PrivateRoute from '/backend/PrivateRoute';
 
 const MembersOnlyPage = () => {
   return (
