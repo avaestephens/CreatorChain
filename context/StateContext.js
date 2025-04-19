@@ -1,8 +1,8 @@
 
 import { useRouter } from 'next/router';
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { auth } from '@/backend/Firebase';
-import { onAuthStateChanged } from 'firebase/auth';
+//import { auth } from '@/backend/Firebase';
+//import { onAuthStateChanged } from 'firebase/auth';
 
 const Context = createContext();
 
@@ -13,16 +13,16 @@ export const StateContext = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  // Listen for auth state changes
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setLoading(false);
-    });
+  // // Listen for auth state changes
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+  //     setUser(currentUser);
+  //     setLoading(false);
+  //   });
 
-    // Cleanup subscription on unmount
-    return () => unsubscribe();
-  }, []);
+  //   // Cleanup subscription on unmount
+  //   return () => unsubscribe();
+  // }, []);
 
   useEffect(() => {
     setMounted(true);

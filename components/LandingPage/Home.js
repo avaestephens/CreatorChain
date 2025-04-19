@@ -1,479 +1,1034 @@
+
+
 import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
 import Link from 'next/link'
-import Navbar from '@/components/Dashboard/Navbar'
-import Footer from "@/components/LandingPage/Footer"
 import { useStateContext } from '@/context/StateContext'
+import styled, { keyframes, css } from 'styled-components'
 
 const Dashboard = () => {
   const { user } = useStateContext()
-  const [age, setAge] = useState(21)
-  const [data, setData] = useState(null)
-
-  function updateAge(){
-    setAge(age + 1)
-  }
-
-  function useEffectFunction(){
-    setTimeout(() => {
-      setData(age * 1000)
-    }, 5000)
-  }
-
-  useEffect(useEffectFunction, [age])
+  const [activeCreators, setActiveCreators] = useState(5467)
+  const [brandsOnPlatform, setBrandsOnPlatform] = useState(1289)
+  const [contractsCompleted, setContractsCompleted] = useState(8745)
 
   useEffect(() => {
-    if (!user){
+    if (!user) {
+      // Handle not logged in state
     } else {
+      // Handle logged in state
     }
-  })
+  }, [user])
+  
+  // SVG Icon Components
+  const ChevronRightIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9 18l6-6-6-6"/>
+    </svg>
+  )
+  
+  const InstagramIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+    </svg>
+  )
+  
+  const TwitterIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+    </svg>
+  )
+  
+  const GlobeIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="2" y1="12" x2="22" y2="12"></line>
+      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+    </svg>
+  )
+  
+  const ZapIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+    </svg>
+  )
+  
+  const ShieldIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+    </svg>
+  )
+  
+  const CoffeeIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+      <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+      <line x1="6" y1="1" x2="6" y2="4"></line>
+      <line x1="10" y1="1" x2="10" y2="4"></line>
+      <line x1="14" y1="1" x2="14" y2="4"></line>
+    </svg>
+  )
+  
+  const CheckCircleIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+      <polyline points="22 4 12 14.01 9 11.01"></polyline>
+    </svg>
+  )
 
   return (
-    <Section>
-      <Navbar />
-      <Header>
-        <Banner>
-          <Title>Penn State Figure Skating</Title>
-        </Banner>
-      </Header>
+    <PageContainer>
+      {/* Navigation */}
+      <NavBar>
+        <Logo>CreatorChain</Logo>
+        
+        <NavLinks>
+          <NavLink href="/explore">Explore</NavLink>
+          <NavLink href="/how-it-works">How It Works</NavLink>
+          <NavLink href="/marketplace">Marketplace</NavLink>
+          <NavLink href="/about">About</NavLink>
+        </NavLinks>
+        
+        <AuthLinks>
+          <LogInLink href="/login">Log In</LogInLink>
+          <SignUpLink href="/signup">Sign Up</SignUpLink>
+        </AuthLinks>
+      </NavBar>
 
-      {/* Team Description Section */}
-      <TeamDescription>
-        <TeamImage src="/images/team.jpg" alt="Team Photo" />
-        <h2>Our Mission</h2>
-        <p>
-          Since 1994, the Penn State Figure Skating Team has grown immensely in membership and dedication. 
-          The Team's mission is to provide a student skating community for those interested in pursuing the 
-          sport recreationally and competitively. We strive to encourage competition, leadership, friendship, 
-          and improvement in skating skills. Additionally, our members participate in weekly social events off 
-          the ice. Figure skating exercises both the mind and body, and we strive to translate our strengths 
-          from skating to our education as Penn State students.
-        </p>
-        <Link href="/our-team" passHref legacyBehavior>
-          <StyledButton>Learn More About Our Team</StyledButton>
-        </Link>
-      </TeamDescription>
+      {/* Hero Section */}
+      <HeroSection>
+        <Container>
+          <HeroContainer>
+            <HeroContent>
+              <HeroTitle>
+                Connect Creators and Brands on the <GradientText>Blockchain</GradientText>
+              </HeroTitle>
+              <HeroDescription>
+                A decentralized marketplace for influencers to secure sponsorships with brands through smart contract-based deals. Protect your content ownership and ensure transparent payments.
+              </HeroDescription>
+              <ButtonGroup>
+                <PrimaryButton href="/creators">I'm a Creator</PrimaryButton>
+                <SecondaryButton href="/brands">I'm a Brand</SecondaryButton>
+              </ButtonGroup>
+            </HeroContent>
+            
+            <HeroImageSection>
+              <CardWrapper>
+                <CardGlow />
+                <FeaturedCard>
+                  <CardHeader>
+                    <CardTitle>FEATURED DEAL</CardTitle>
+                    <StatusBadge>COMPLETED</StatusBadge>
+                  </CardHeader>
+                  
+                  <CreatorProfile>
+                    <ProfileImage>
+                      <img src="/api/placeholder/100/100" alt="Creator" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    </ProfileImage>
+                    <div>
+                      <CreatorName>ava.sk8</CreatorName>
+                      <CreatorStats>200k Followers</CreatorStats>
+                    </div>
+                  </CreatorProfile>
+                  
+                  <ContractBox>
+                    <ContractTitle>Contract with <BrandName>SkateCo</BrandName></ContractTitle>
+                    <VerificationTag>
+                      <CheckCircleIcon /> <span style={{ marginLeft: '4px' }}>Verified on blockchain</span>
+                    </VerificationTag>
+                  </ContractBox>
+                  
+                  <PaymentInfo>
+                    3.4 ETH Payment • Content Rights Protected
+                  </PaymentInfo>
+                </FeaturedCard>
+              </CardWrapper>
+            </HeroImageSection>
+          </HeroContainer>
+        </Container>
+      </HeroSection>
 
-      {/* Intercollegiate Skating Section */}
-      <IntercollegiateSection>
-        <SectionTitle>Intercollegiate Figure Skating</SectionTitle>
-        <TwoColumnLayout>
-          <ContentColumn>
-            <h3>U.S. Figure Skating Collegiate Program</h3>
-            <p>
-              Penn State Figure Skating is proud to be a part of the U.S. Figure Skating Collegiate Program, 
-              which offers opportunities for college students to continue their skating careers while pursuing 
-              their academic goals. Our team competes in the Eastern Conference against other prestigious 
-              universities including Cornell, Boston, Delaware, and more.
-            </p>
-            <p>
-              Through the intercollegiate program, skaters compete in various levels from preliminary to senior 
-              in free skate, short program, dance, and team maneuvers. Points earned during competitions contribute 
-              to team standings and qualify teams for the national championship.
-            </p>
-          </ContentColumn>
-          <ImageColumn>
-            <ImageGrid>
-              <GridImage src="/images/upenn.JPEG" alt="Competition Performance" />
-              <GridImage src="/images/medals.jpg" alt="Team at Nationals" />
-              <GridImage src="/images/action.jpg" alt="Team Medals" />
-              <GridImage src="/images/usfs.jpg" alt="USFS Logo" />
-            </ImageGrid>
-          </ImageColumn>
-        </TwoColumnLayout>
-      </IntercollegiateSection>
+      {/* Stats Section */}
+      <StatsSection>
+        <Container>
+          <StatsGrid>
+            <StatCard>
+              <StatNumber>{activeCreators.toLocaleString()}</StatNumber>
+              <StatLabel>Active Creators</StatLabel>
+            </StatCard>
+            
+            <StatCard>
+              <StatNumber>{brandsOnPlatform.toLocaleString()}</StatNumber>
+              <StatLabel>Brands on Platform</StatLabel>
+            </StatCard>
+            
+            <StatCard>
+              <StatNumber>{contractsCompleted.toLocaleString()}</StatNumber>
+              <StatLabel>Contracts Completed</StatLabel>
+            </StatCard>
+          </StatsGrid>
+        </Container>
+      </StatsSection>
 
-      {/* Team Achievements */}
-      <AchievementsSection>
-        <SectionTitle>Team Achievements</SectionTitle>
-        <AchievementCards>
-          <AchievementCard>
-            <AchievementIcon>🏆</AchievementIcon>
-            <AchievementTitle>Southeastern Conference</AchievementTitle>
-            <AchievementText>Multiple podium finishes in regional competitions</AchievementText>
-          </AchievementCard>
-          <AchievementCard>
-            <AchievementIcon>🥇</AchievementIcon>
-            <AchievementTitle>National Qualifiers</AchievementTitle>
-            <AchievementText>Qualified for nationals multiple years</AchievementText>
-          </AchievementCard>
-          <AchievementCard>
-            <AchievementIcon>👥</AchievementIcon>
-            <AchievementTitle>Growing Team</AchievementTitle>
-            <AchievementText>Over 30 active members from various skating backgrounds</AchievementText>
-          </AchievementCard>
-        </AchievementCards>
-      </AchievementsSection>
+      {/* How It Works Section */}
+      <section style={{ padding: '5rem 0' }}>
+        <Container>
+          <SectionTitle>
+            How <GradientText>CreatorChain</GradientText> Works
+          </SectionTitle>
+          
+          <FeaturesGrid>
+            <FeatureCard>
+              <IconWrapper>
+                <ShieldIcon />
+              </IconWrapper>
+              <FeatureTitle>Secure Smart Contracts</FeatureTitle>
+              <FeatureDescription>
+                Our blockchain-based contracts ensure fair terms and automatic payments when deliverables are met.
+              </FeatureDescription>
+            </FeatureCard>
+            
+            <FeatureCard>
+              <IconWrapper>
+                <CoffeeIcon />
+              </IconWrapper>
+              <FeatureTitle>No Middlemen</FeatureTitle>
+              <FeatureDescription>
+                Direct creator-to-brand deals mean no agencies taking cuts from your earnings.
+              </FeatureDescription>
+            </FeatureCard>
+            
+            <FeatureCard>
+              <IconWrapper>
+                <ZapIcon />
+              </IconWrapper>
+              <FeatureTitle>Content Ownership</FeatureTitle>
+              <FeatureDescription>
+                NFT-based licensing protects creators' content rights while providing brands with clear usage terms.
+              </FeatureDescription>
+            </FeatureCard>
+          </FeaturesGrid>
+        </Container>
+      </section>
 
-      <MainContent>
-        <Card>
-          <CardTitle>About the Team</CardTitle>
-          <CardText>
-            The Penn State Figure Skating Team is a passionate group of skaters from various backgrounds and skill levels united by their love for the sport.
-          </CardText>
-          <Link href="/our-team" passHref legacyBehavior>
-            <CardButton>Meet the Team</CardButton>
-          </Link>
-        </Card>
+      {/* Featured Creators Section */}
+      <section style={{ padding: '5rem 0', backgroundColor: 'rgba(0, 0, 0, 0.4)' }}>
+        <Container>
+          <CreatorsHeader>
+            <SectionTitle style={{ margin: 0 }}>Featured Creators</SectionTitle>
+            <ViewAllLink href="/explore">
+              View all <ChevronRightIcon />
+            </ViewAllLink>
+          </CreatorsHeader>
+          
+          <CreatorsGrid>
+            {[
+              { name: "Ava.sk8", followers: "200k", niche: "Figure Skating", img: "/api/placeholder/300/300" },
+              { name: "TechGuru", followers: "845K", niche: "Technology", img: "/api/placeholder/300/300" },
+              { name: "FitWithJamie", followers: "2.3M", niche: "Fitness", img: "/api/placeholder/300/300" },
+              { name: "CookingWithAlex", followers: "962K", niche: "Cooking", img: "/api/placeholder/300/300" }
+            ].map((creator, index) => (
+              <CreatorCard key={index}>
+                <CreatorImageContainer>
+                  <img src={creator.img} alt={creator.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </CreatorImageContainer>
+                
+                <CreatorCardContent>
+                  <CreatorCardHeader>
+                    <CreatorCardName>{creator.name}</CreatorCardName>
+                    <CreatorCardBadge>{creator.niche}</CreatorCardBadge>
+                  </CreatorCardHeader>
+                  
+                  <CreatorCardStats>
+                    {creator.followers} followers
+                  </CreatorCardStats>
+                  
+                  <ViewProfileButton href={`/creator/${creator.name}`}>
+                    View Profile
+                  </ViewProfileButton>
+                </CreatorCardContent>
+              </CreatorCard>
+            ))}
+          </CreatorsGrid>
+        </Container>
+      </section>
 
-        <Card>
-          <CardTitle>Schedule</CardTitle>
-          <CardText>Check out our upcoming practices, competitions, and social events throughout the semester.</CardText>
-          <Link href="/schedule" passHref legacyBehavior>
-            <CardButton>View Schedule</CardButton>
-          </Link>
-        </Card>
+      {/* Testimonials Section */}
+      <section style={{ padding: '5rem 0' }}>
+        <Container>
+          <SectionTitle>
+            What People Are <GradientText>Saying</GradientText>
+          </SectionTitle>
+          
+          <TestimonialsGrid>
+            <TestimonialCard>
+              <QuoteMark>"</QuoteMark>
+              <TestimonialText>
+                CreatorChain has completely transformed how I approach brand deals. With smart contracts, I know exactly when I'll get paid, and the terms are crystal clear.
+              </TestimonialText>
+              <TestimonialAuthor>
+                <AuthorImage>
+                  <img src="/api/placeholder/100/100" alt="Author" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </AuthorImage>
+                <AuthorInfo>
+                  <AuthorName>Jamie Lee</AuthorName>
+                  <AuthorRole>Travel Content Creator</AuthorRole>
+                </AuthorInfo>
+              </TestimonialAuthor>
+            </TestimonialCard>
+            
+            <TestimonialCard>
+              <QuoteMark>"</QuoteMark>
+              <TestimonialText>
+                As a brand manager, I love how transparent the whole process is. We can verify all creator metrics before finalizing deals, and content usage rights are clearly defined via NFTs.
+              </TestimonialText>
+              <TestimonialAuthor>
+                <AuthorImage>
+                  <img src="/api/placeholder/100/100" alt="Author" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </AuthorImage>
+                <AuthorInfo>
+                  <AuthorName>Michael Chen</AuthorName>
+                  <AuthorRole>Marketing Director, EcoGear</AuthorRole>
+                </AuthorInfo>
+              </TestimonialAuthor>
+            </TestimonialCard>
+          </TestimonialsGrid>
+        </Container>
+      </section>
 
-        <Card>
-          <CardTitle>Contact Us</CardTitle>
-          <CardText>Get in touch with our team leadership for information about joining, sponsorships, or collaborations.</CardText>
-          <Link href="/contact" passHref legacyBehavior>
-            <CardButton>Contact Us</CardButton>
-          </Link>
-        </Card>
-      </MainContent>
+      {/* CTA Section */}
+      <CTASection>
+        <CTAContainer>
+          <CTATitle>Ready to Transform Your Creator Business?</CTATitle>
+          <CTADescription>
+            Join thousands of creators and brands who are building profitable partnerships on CreatorChain.
+          </CTADescription>
+          <CTAButtons>
+            <WhiteButton href="/signup">Create Account</WhiteButton>
+            <OutlineButton href="/how-it-works">Learn More</OutlineButton>
+          </CTAButtons>
+        </CTAContainer>
+      </CTASection>
 
-      {/* Join Us Section */}
-      <JoinSection>
-        <JoinContent>
-          <h2>Join Our Team</h2>
-          <p>
-            Whether you're a competitive skater or just passionate about the sport, 
-            we welcome skaters of all levels to join our team! No tryouts required.
-          </p>
-          <a href="https://forms.gle/LEMc9XvVMTsGxPLj8" target="_blank" rel="noopener noreferrer">
-            <JoinButton>Join Penn State Figure Skating</JoinButton>
-          </a>
-        </JoinContent>
-      </JoinSection>
-
+      {/* Footer */}
       <Footer>
-        <SocialLinks>
-          <Link href="/social-media" passHref legacyBehavior>
-            <SocialButton>Follow Us on Social Media</SocialButton>
-          </Link>
-        </SocialLinks>
+        <Container>
+          <FooterGrid>
+            <FooterColumn>
+              <FooterLogo>CreatorChain</FooterLogo>
+              <FooterDescription>
+                Connecting creators and brands with blockchain-powered partnerships.
+              </FooterDescription>
+              <SocialLinks>
+                <SocialLink href="#"><InstagramIcon /></SocialLink>
+                <SocialLink href="#"><TwitterIcon /></SocialLink>
+                <SocialLink href="#"><GlobeIcon /></SocialLink>
+              </SocialLinks>
+            </FooterColumn>
+            
+            <FooterColumn>
+              <FooterHeading>Platform</FooterHeading>
+              <FooterLinks>
+                <FooterLinkItem><FooterLink href="/explore">Explore</FooterLink></FooterLinkItem>
+                <FooterLinkItem><FooterLink href="/marketplace">Marketplace</FooterLink></FooterLinkItem>
+                <FooterLinkItem><FooterLink href="/how-it-works">How It Works</FooterLink></FooterLinkItem>
+                <FooterLinkItem><FooterLink href="/pricing">Pricing</FooterLink></FooterLinkItem>
+              </FooterLinks>
+            </FooterColumn>
+            
+            <FooterColumn>
+              <FooterHeading>Resources</FooterHeading>
+              <FooterLinks>
+                <FooterLinkItem><FooterLink href="/blog">Blog</FooterLink></FooterLinkItem>
+                <FooterLinkItem><FooterLink href="/guides">Guides</FooterLink></FooterLinkItem>
+                <FooterLinkItem><FooterLink href="/documentation">Documentation</FooterLink></FooterLinkItem>
+                <FooterLinkItem><FooterLink href="/support">Support</FooterLink></FooterLinkItem>
+              </FooterLinks>
+            </FooterColumn>
+            
+            <FooterColumn>
+              <FooterHeading>Company</FooterHeading>
+              <FooterLinks>
+                <FooterLinkItem><FooterLink href="/about">About</FooterLink></FooterLinkItem>
+                <FooterLinkItem><FooterLink href="/careers">Careers</FooterLink></FooterLinkItem>
+                <FooterLinkItem><FooterLink href="/privacy">Privacy</FooterLink></FooterLinkItem>
+                <FooterLinkItem><FooterLink href="/terms">Terms</FooterLink></FooterLinkItem>
+              </FooterLinks>
+            </FooterColumn>
+          </FooterGrid>
+          
+          <FooterDivider>
+            © {new Date().getFullYear()} CreatorChain. All rights reserved.
+          </FooterDivider>
+        </Container>
       </Footer>
-    </Section>
+    </PageContainer>
   )
 }
 
-const Section = styled.section`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #f4f4f4;
-  padding-top: 80px; /* Adjust based on navbar height */
-`
+export default Dashboard
+                    
 
-const Header = styled.header`
-  width: 100%;
-  background-color: #041e42;
-  color: white;
-  padding: 40px 0;
-  text-align: center;
-`
 
-const Banner = styled.div`
-  background-color: #0f3068; /* PSU Blue */
-  padding: 8px 0;
-`
-
-const Title = styled.h1`
-  font-size: 3rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-`
-
-const Subtitle = styled.h2`
-  font-size: 1.5rem;
-  font-weight: 300;
-`
-
-const TeamImage = styled.img`
-  border-radius: 1%;
-  width: 600px;
-  height: 400px;
-  object-fit: cover;
-  margin-bottom: 20px;
+// Keyframes
+const gradientAnimation = keyframes`
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 `;
 
-const TeamDescription = styled.section`
-  width: 80%;
-  margin: 40px 0;
-  padding: 30px;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  
-  h2 {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #041e42;
-  }
+const fadeIn = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
+`;
 
-  p {
-    font-size: 1.1rem;
-    color: #555;
-    line-height: 1.6;
-    margin-bottom: 20px;
-  }
-`
-
-// Intercollegiate Section Styles
-const IntercollegiateSection = styled.section`
-  width: 90%;
-  margin: 40px 0;
-  padding: 30px;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-`
-
-const SectionTitle = styled.h2`
-  font-size: 2.2rem;
-  text-align: center;
-  margin-bottom: 30px;
-  color: #041e42;
-  position: relative;
-  
-  &:after {
-    content: '';
-    display: block;
-    width: 100px;
-    height: 3px;
-    background-color: #041e42;
-    margin: 10px auto 0;
-  }
-`
-
-const TwoColumnLayout = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 30px;
-  
-  @media (max-width: 992px) {
-    flex-direction: column;
-  }
-`
-
-const ContentColumn = styled.div`
-  flex: 1;
-  
-  h3 {
-    font-size: 1.5rem;
-    margin-bottom: 15px;
-    color: #041e42;
-  }
-  
-  p {
-    margin-bottom: 20px;
-    line-height: 1.6;
-    color: #444;
-  }
-`
-
-const ImageColumn = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-
-const ImageGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 15px;
-`
-
-const GridImage = styled.img`
-  width: 200px;
-  height: 250px;
-  object-fit: cover;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-  
-  &:hover {
-    transform: scale(1.05);
-  }
-`
-
-// Achievements Section
-const AchievementsSection = styled.section`
-  width: 90%;
-  margin: 40px 0;
-  padding: 30px;
-  text-align: center;
-`
-
-const AchievementCards = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  flex-wrap: wrap;
-`
-
-const AchievementCard = styled.div`
-  background-color: white;
-  border-radius: 10px;
-  padding: 25px 20px;
-  width: 250px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  
-  &:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-  }
-`
-
-const AchievementIcon = styled.div`
-  font-size: 3rem;
-  margin-bottom: 15px;
-`
-
-const AchievementTitle = styled.h3`
-  font-size: 1.3rem;
-  margin-bottom: 10px;
-  color: #041e42;
-`
-
-const AchievementText = styled.p`
-  color: #666;
-`
-
-// Join Section Styles
-const JoinSection = styled.section`
-  width: 100%;
-  margin: 60px 0 40px;
-  padding: 50px 0;
-  background-color: #041e42;
+// Layout Components
+const PageContainer = styled.div`
+  min-height: 100vh;
+  background-color: #121826;
   color: white;
-  text-align: center;
-`
+`;
 
-const JoinContent = styled.div`
-  width: 80%;
-  max-width: 800px;
+const Container = styled.div`
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 0 1rem;
   
-  h2 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
+  @media (min-width: 768px) {
+    padding: 0 2rem;
   }
-  
-  p {
-    font-size: 1.2rem;
-    margin-bottom: 30px;
-    line-height: 1.6;
-  }
-`
+`;
 
-const JoinButton = styled.a`
-  display: inline-block;
-  background-color: white;
-  color: #041e42;
-  padding: 15px 30px;
-  border-radius: 50px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  
-  &:hover {
-    background-color: #ffffff;
-    transform: scale(1.05);
-  }
-`
-
-const StyledButton = styled.a`
-  display: inline-block;
-  background-color: #041e42;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: #1a3c7f;
-  }
-`
-
-const MainContent = styled.main`
+// Navigation
+const NavBar = styled.nav`
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.95);
+  z-index: 50;
+  padding: 1rem 1.5rem;
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  width: 80%;
-  margin: 40px 0;
-  gap: 2rem;
-  flex-wrap: wrap;
-`
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #2d3748;
+`;
 
-const Card = styled.div`
-  background-color: white;
-  border-radius: 10px;
-  padding: 20px;
-  width: 300px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  transition: transform 0.3s ease;
-  
-  &:hover {
-    transform: scale(1.05);
-  }
-`
-
-const CardTitle = styled.h3`
+const Logo = styled.span`
   font-size: 1.5rem;
   font-weight: bold;
-  margin-bottom: 15px;
-  color: #041e42;
-`
+  background: linear-gradient(to right, #805ad5, #3182ce);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+`;
 
-const CardText = styled.p`
-  font-size: 1rem;
-  color: #555;
-`
-
-const CardButton = styled.a`
-  display: inline-block;
-  background-color: #041e42;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  text-decoration: none;
-  margin-top: 10px;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: #1a3c7f;
+const NavLinks = styled.div`
+  display: none;
+  
+  @media (min-width: 768px) {
+    display: flex;
+    gap: 2rem;
   }
-`
+`;
+
+const NavLink = styled(Link)`
+  color: #cbd5e0;
+  transition: color 0.2s;
+  
+  &:hover {
+    color: #a78bfa;
+  }
+`;
+
+const AuthLinks = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
+
+const LogInLink = styled(Link)`
+  padding: 0.5rem 1rem;
+  color: #cbd5e0;
+  border-radius: 0.375rem;
+  transition: color 0.2s;
+  
+  &:hover {
+    color: white;
+  }
+`;
+
+const SignUpLink = styled(Link)`
+  padding: 0.5rem 1rem;
+  background: linear-gradient(to right, #805ad5, #3182ce);
+  border-radius: 0.375rem;
+  transition: opacity 0.2s;
+  
+  &:hover {
+    opacity: 0.9;
+  }
+`;
+
+// Hero Section
+const HeroSection = styled.section`
+  padding-top: 8rem;
+  padding-bottom: 5rem;
+`;
+
+const HeroContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  
+  @media (min-width: 768px) {
+    flex-direction: row;
+    align-items: center;
+  }
+`;
+
+const HeroContent = styled.div`
+  @media (min-width: 768px) {
+    width: 50%;
+    padding-right: 3rem;
+  }
+`;
+
+const HeroTitle = styled.h1`
+  font-size: 2.25rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+  
+  @media (min-width: 768px) {
+    font-size: 3rem;
+  }
+`;
+
+const GradientText = styled.span`
+  background: linear-gradient(to right, #805ad5, #3182ce);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+`;
+
+const HeroDescription = styled.p`
+  color: #cbd5e0;
+  font-size: 1.125rem;
+  margin-bottom: 2rem;
+`;
+
+const ButtonGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  
+  @media (min-width: 640px) {
+    flex-direction: row;
+  }
+`;
+
+const PrimaryButton = styled(Link)`
+  background: linear-gradient(to right, #805ad5, #3182ce);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  text-align: center;
+  transition: opacity 0.2s;
+  
+  &:hover {
+    opacity: 0.9;
+  }
+`;
+
+const SecondaryButton = styled(Link)`
+  background-color: #2d3748;
+  border: 1px solid #4a5568;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  text-align: center;
+  transition: background-color 0.2s;
+  
+  &:hover {
+    background-color: #4a5568;
+  }
+`;
+
+// Featured Deal Card
+const HeroImageSection = styled.div`
+  margin-top: 3rem;
+  
+  @media (min-width: 768px) {
+    width: 50%;
+    margin-top: 0;
+  }
+`;
+
+const CardWrapper = styled.div`
+  position: relative;
+`;
+
+const CardGlow = styled.div`
+  position: absolute;
+  inset: -0.25rem;
+  background: linear-gradient(to right, #805ad5, #3182ce);
+  border-radius: 0.5rem;
+  opacity: 0.75;
+  filter: blur(15px);
+`;
+
+const FeaturedCard = styled.div`
+  position: relative;
+  background-color: #2d3748;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  padding: 2rem;
+`;
+
+const CardHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+`;
+
+const CardTitle = styled.div`
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #a0aec0;
+`;
+
+const StatusBadge = styled.div`
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  background-color: #805ad5;
+  border-radius: 9999px;
+`;
+
+const CreatorProfile = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+`;
+
+const ProfileImage = styled.div`
+  height: 3rem;
+  width: 3rem;
+  border-radius: 9999px;
+  overflow: hidden;
+  background-color: #4a5568;
+  margin-right: 1rem;
+`;
+
+const CreatorName = styled.div`
+  font-weight: 500;
+`;
+
+const CreatorStats = styled.div`
+  font-size: 0.875rem;
+  color: #a0aec0;
+`;
+
+const ContractBox = styled.div`
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background-color: #1a202c;
+  border-radius: 0.375rem;
+`;
+
+const ContractTitle = styled.div`
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+`;
+
+const BrandName = styled.span`
+  font-weight: 600;
+  color: #63b3ed;
+`;
+
+const VerificationTag = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 0.75rem;
+  color: #a0aec0;
+`;
+
+const PaymentInfo = styled.div`
+  text-align: center;
+  background: linear-gradient(to right, #805ad5, #3182ce);
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+`;
+
+// Stats Section
+const StatsSection = styled.section`
+  padding: 4rem 0;
+  background-color: rgba(0, 0, 0, 0.4);
+`;
+
+const StatsGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+`;
+
+const StatCard = styled.div`
+  text-align: center;
+  padding: 1.5rem;
+  background-color: #2d3748;
+  border-radius: 0.5rem;
+  border: 1px solid #4a5568;
+`;
+
+const StatNumber = styled.div`
+  font-size: 2.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(to right, #805ad5, #3182ce);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+`;
+
+const StatLabel = styled.div`
+  color: #cbd5e0;
+`;
+
+// How It Works Section
+const SectionTitle = styled.h2`
+  font-size: 1.875rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 3rem;
+`;
+
+const FeaturesGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+`;
+
+const FeatureCard = styled.div`
+  padding: 1.5rem;
+  background-color: #2d3748;
+  border-radius: 0.5rem;
+  border: 1px solid #4a5568;
+  transition: border-color 0.3s;
+  
+  &:hover {
+    border-color: #805ad5;
+  }
+`;
+
+const IconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  width: 3rem;
+  border-radius: 0.375rem;
+  background: linear-gradient(to right, #805ad5, #3182ce);
+  margin-bottom: 1rem;
+`;
+
+const FeatureTitle = styled.h3`
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+`;
+
+const FeatureDescription = styled.p`
+  color: #cbd5e0;
+`;
+
+// Featured Creators Section
+const CreatorsHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+`;
+
+const ViewAllLink = styled(Link)`
+  display: flex;
+  align-items: center;
+  color: #a78bfa;
+  
+  &:hover {
+    color: #9f7aea;
+  }
+`;
+
+const CreatorsGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+`;
+
+const CreatorCard = styled.div`
+  background-color: #2d3748;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  border: 1px solid #4a5568;
+  transition: border-color 0.3s;
+  
+  &:hover {
+    border-color: #805ad5;
+  }
+`;
+
+const CreatorImageContainer = styled.div`
+  height: 12rem;
+  background-color: #4a5568;
+`;
+
+const CreatorCardContent = styled.div`
+  padding: 1rem;
+`;
+
+const CreatorCardHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+`;
+
+const CreatorCardName = styled.h3`
+  font-weight: 600;
+`;
+
+const CreatorCardBadge = styled.span`
+  font-size: 0.75rem;
+  background-color: #4a5568;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+`;
+
+const CreatorCardStats = styled.div`
+  font-size: 0.875rem;
+  color: #a0aec0;
+  margin-bottom: 0.75rem;
+`;
+
+const ViewProfileButton = styled(Link)`
+  display: block;
+  text-align: center;
+  padding: 0.5rem;
+  background: linear-gradient(to right, #805ad5, #3182ce);
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+`;
+
+// Testimonials Section
+const TestimonialsGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+`;
+
+const TestimonialCard = styled.div`
+  padding: 1.5rem;
+  background-color: #2d3748;
+  border-radius: 0.5rem;
+  border: 1px solid #4a5568;
+`;
+
+const QuoteMark = styled.div`
+  color: #a78bfa;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+`;
+
+const TestimonialText = styled.p`
+  color: #cbd5e0;
+  margin-bottom: 1.5rem;
+`;
+
+const TestimonialAuthor = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const AuthorImage = styled.div`
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 9999px;
+  background-color: #4a5568;
+  margin-right: 0.75rem;
+`;
+
+const AuthorInfo = styled.div``;
+
+const AuthorName = styled.div`
+  font-weight: 500;
+`;
+
+const AuthorRole = styled.div`
+  font-size: 0.875rem;
+  color: #a0aec0;
+`;
+
+// CTA Section
+const CTASection = styled.section`
+  padding: 5rem 0;
+  background: linear-gradient(to right, #4c1d95, #1e3a8a);
+`;
+
+const CTAContainer = styled.div`
+  max-width: 48rem;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 1rem;
+`;
+
+const CTATitle = styled.h2`
+  font-size: 1.875rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  
+  @media (min-width: 768px) {
+    font-size: 2.25rem;
+  }
+`;
+
+const CTADescription = styled.p`
+  font-size: 1.25rem;
+  color: #cbd5e0;
+  margin-bottom: 2rem;
+`;
+
+const CTAButtons = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  
+  @media (min-width: 640px) {
+    flex-direction: row;
+  }
+`;
+
+const WhiteButton = styled(Link)`
+  background-color: white;
+  color: #1a202c;
+  padding: 0.75rem 2rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+  
+  &:hover {
+    background-color: #f7fafc;
+  }
+`;
+
+const OutlineButton = styled(Link)`
+  background-color: transparent;
+  border: 1px solid white;
+  padding: 0.75rem 2rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+  
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+`;
+
+// Footer
+const Footer = styled.footer`
+  background-color: black;
+  padding: 3rem 1rem;
+`;
+
+const FooterGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+`;
+
+const FooterColumn = styled.div``;
+
+const FooterLogo = styled.h3`
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  background: linear-gradient(to right, #805ad5, #3182ce);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+`;
+
+const FooterDescription = styled.p`
+  color: #a0aec0;
+  margin-bottom: 1rem;
+`;
 
 const SocialLinks = styled.div`
   display: flex;
-  justify-content: center;
-`
+  gap: 1rem;
+`;
 
-const SocialButton = styled.a`
-  background-color: #ffffff;
-  color: black;
-  padding: 10px 20px;
-  border-radius: 5px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background 0.3s ease;
-  margin-top: 10px;
-
+const SocialLink = styled.a`
+  color: #a0aec0;
+  transition: color 0.2s;
+  
   &:hover {
-    background-color: #ffdd44;
+    color: white;
   }
-`
+`;
 
-export default Dashboard
+const FooterHeading = styled.h4`
+  font-weight: 600;
+  margin-bottom: 1rem;
+`;
+
+const FooterLinks = styled.ul`
+  list-style: none;
+`;
+
+const FooterLinkItem = styled.li`
+  margin-bottom: 0.5rem;
+`;
+
+const FooterLink = styled(Link)`
+  color: #a0aec0;
+  transition: color 0.2s;
+  
+  &:hover {
+    color: white;
+  }
+`;
+
+const FooterDivider = styled.div`
+  padding-top: 2rem;
+  border-top: 1px solid #2d3748;
+  text-align: center;
+  color: #a0aec0;
+  font-size: 0.875rem;
+`;
