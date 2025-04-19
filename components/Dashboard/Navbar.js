@@ -1,27 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
+import { auth } from '@/backend/Firebase';
+import { signOut } from 'firebase/auth';
 import { useStateContext } from '@/context/StateContext';
-import { FaBars, FaTimes } from 'react-icons/fa'; // Icons for hamburger and close buttons
-import Link from 'next/link'; // Correct Link import
-import { auth } from '@/backend/Firebase'; // Import Firebase auth directly
-import { signOut } from 'firebase/auth'; // Import signOut from firebase/auth
 
 const Navbar = () => {
   const { setUser } = useStateContext();
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // State for the hamburger menu toggle
-  const router = useRouter(); // Using Next.js router to handle navigation
+  const router = useRouter();
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  // Fixed logout function implementation
   const handleLogoClick = async () => {
     try {
-      await signOut(auth); // Use Firebase's signOut function directly
-      setUser(null); // Update user state
-      router.push('/auth/login'); // Redirect to home page after logout
+      await signOut(auth);
+      setUser(null);
+      router.push('/auth/login');
     } catch (error) {
       console.error('Error signing out:', error);
     }
@@ -29,157 +22,96 @@ const Navbar = () => {
 
   return (
     <Nav>
-      <NavContainer>
-        <LogoContainer>
-          <LogoImage src="/images/lionhead.png" alt="Logo" />
-          <Logo onClick={handleLogoClick}>PSU Figure Skating</Logo>
-        </LogoContainer>
-
-        <HamburgerIcon onClick={toggleMenu}>
-          {isMenuOpen ? <FaTimes /> : <FaBars />} {/* Hamburger menu */}
-        </HamburgerIcon>
-
-        <NavLinks $isOpen={isMenuOpen}>
-          <Link href="/" passHref legacyBehavior>
-            <NavItem>Home</NavItem>
-          </Link>
-          <Link href="/our-team" passHref legacyBehavior>
-            <NavItem>Our Team</NavItem>
-          </Link>
-          <Link href="/schedule" passHref legacyBehavior>
-            <NavItem>Schedule</NavItem>
-          </Link>
-          <Link href="/contact" passHref legacyBehavior>
-            <NavItem>Contact</NavItem>
-          </Link>
-          <Link href="/members-only" passHref legacyBehavior>
-            <NavItem>Members</NavItem>
-          </Link>
-          <Link href="/auth/signup" passHref legacyBehavior>
-            <ButtonLink>Sign Up</ButtonLink>
-          </Link>
-          <Link href="/auth/login" passHref legacyBehavior>
-            <ButtonLink>Login</ButtonLink>
-          </Link>
+      <NavContent>
+      <Logo>CreatorChain</Logo>
+        
+        <NavLinks>
+        <NavLink href="/">Home</NavLink>
+          <NavLink href="/explore">Explore</NavLink>
+          <NavLink href="/how-it-works">How It Works</NavLink>
+          <NavLink href="/marketplace">Marketplace</NavLink>
+          <NavLink href="/about">About</NavLink>
         </NavLinks>
-      </NavContainer>
+        
+        <AuthLinks>
+          <LogInLink href="/login">Log In</LogInLink>
+          <SignUpLink href="/signup">Sign Up</SignUpLink>
+        </AuthLinks>
+      </NavContent>
     </Nav>
   );
 };
 
 const Nav = styled.nav`
-  background-color: #041e42; /* PSU Navy Blue */
-  color: white;
-  width: 100%; /* Ensures full width */
+  background-color: #041e42;
+  padding: 1rem 2rem;
   position: fixed;
+  width: 100%;
   top: 0;
-  left: 0;
   z-index: 1000;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 `;
 
-const NavContainer = styled.div`
+const NavContent = styled.div`
   max-width: 1200px;
-  width: 100%;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-
-  @media (max-width: 1024px) {
-    padding: 1rem;
-  }
 `;
 
-const LogoContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 15px; /* Adds space between logo and text */
-`;
-
-const Logo = styled.a`
+const Logo = styled.span`
   font-size: 1.5rem;
   font-weight: bold;
-  color: #ffffff;
-  cursor: pointer;
-  text-decoration: none;
-
-  &:hover {
-    color: #dddddd;
-  }
-`;
-
-const LogoImage = styled.img`
-  height: 60px;
-  width: auto;
+  background: linear-gradient(to right, #805ad5, #3182ce);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
 `;
 
 const NavLinks = styled.div`
-  display: flex;
-  gap: 1.2rem;
-  align-items: center;
-
-  @media (max-width: 1200px) {
-    flex-direction: column;
-    position: absolute;
-    top: 70px;
-    right: 0;
-    width: 250px;
-    background-color: #041e42;
-    box-shadow: -4px 4px 10px rgba(0, 0, 0, 0.2);
-    padding: 1rem;
-    border-radius: 5px;
-    display: ${({ $isOpen }) => ($isOpen ? 'flex' : 'none')}; /* Fix isOpen prop */
-    align-items: center;
-  }
-`;
-
-const NavItem = styled.a`
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  padding: 0.5rem 1rem;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: #1a3c7f; /* Slight blue hover */
-    border-radius: 5px;
-  }
-
-  &:active {
-    background-color: transparent;
-  }
-`;
-
-const ButtonLink = styled.a`
-  padding: 0.5rem 1rem;
-  background-color: #ffffff;
-  color: black;
-  border-radius: 5px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background 0.3s ease;
-
-  &:hover {
-    background-color: #cccccc;
-  }
-
-  &:active {
-    background-color: transparent;
-  }
-`;
-
-const HamburgerIcon = styled.div`
   display: none;
-  font-size: 2rem;
-  color: #ffffff;
-  cursor: pointer;
+  
+  @media (min-width: 768px) {
+    display: flex;
+    gap: 2rem;
+  }
+`;
 
-  @media (max-width: 1200px) {
-    display: block;
+const NavLink = styled(Link)`
+  color: #cbd5e0;
+  transition: color 0.2s;
+  
+  &:hover {
+    color: #a78bfa;
+  }
+`;
+
+const AuthLinks = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
+
+const LogInLink = styled(Link)`
+  padding: 0.5rem 1rem;
+  color: #cbd5e0;
+  border-radius: 0.375rem;
+  transition: color 0.2s;
+  
+  &:hover {
+    color: white;
+  }
+`;
+
+const SignUpLink = styled(Link)`
+  padding: 0.5rem 1rem;
+  background: linear-gradient(to right, #805ad5, #3182ce);
+  border-radius: 0.375rem;
+  transition: opacity 0.2s;
+  
+  &:hover {
+    opacity: 0.9;
   }
 `;
 
 export default Navbar;
-

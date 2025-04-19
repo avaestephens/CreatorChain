@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useStateContext } from '@/context/StateContext'
 import styled, { keyframes, css } from 'styled-components'
+import Navbar from '@/components/Dashboard/Navbar'
 
 const Dashboard = () => {
   const { user } = useStateContext()
@@ -79,22 +80,7 @@ const Dashboard = () => {
 
   return (
     <PageContainer>
-      {/* Navigation */}
-      <NavBar>
-        <Logo>CreatorChain</Logo>
-        
-        <NavLinks>
-          <NavLink href="/explore">Explore</NavLink>
-          <NavLink href="/how-it-works">How It Works</NavLink>
-          <NavLink href="/marketplace">Marketplace</NavLink>
-          <NavLink href="/about">About</NavLink>
-        </NavLinks>
-        
-        <AuthLinks>
-          <LogInLink href="/login">Log In</LogInLink>
-          <SignUpLink href="/signup">Sign Up</SignUpLink>
-        </AuthLinks>
-      </NavBar>
+      <Navbar/>
 
       {/* Hero Section */}
       <HeroSection>
@@ -400,73 +386,6 @@ const Container = styled.div`
   }
 `;
 
-// Navigation
-const NavBar = styled.nav`
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.95);
-  z-index: 50;
-  padding: 1rem 1.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #2d3748;
-`;
-
-const Logo = styled.span`
-  font-size: 1.5rem;
-  font-weight: bold;
-  background: linear-gradient(to right, #805ad5, #3182ce);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-`;
-
-const NavLinks = styled.div`
-  display: none;
-  
-  @media (min-width: 768px) {
-    display: flex;
-    gap: 2rem;
-  }
-`;
-
-const NavLink = styled(Link)`
-  color: #cbd5e0;
-  transition: color 0.2s;
-  
-  &:hover {
-    color: #a78bfa;
-  }
-`;
-
-const AuthLinks = styled.div`
-  display: flex;
-  gap: 1rem;
-`;
-
-const LogInLink = styled(Link)`
-  padding: 0.5rem 1rem;
-  color: #cbd5e0;
-  border-radius: 0.375rem;
-  transition: color 0.2s;
-  
-  &:hover {
-    color: white;
-  }
-`;
-
-const SignUpLink = styled(Link)`
-  padding: 0.5rem 1rem;
-  background: linear-gradient(to right, #805ad5, #3182ce);
-  border-radius: 0.375rem;
-  transition: opacity 0.2s;
-  
-  &:hover {
-    opacity: 0.9;
-  }
-`;
 
 // Hero Section
 const HeroSection = styled.section`
@@ -1032,3 +951,5 @@ const FooterDivider = styled.div`
   color: #a0aec0;
   font-size: 0.875rem;
 `;
+
+
