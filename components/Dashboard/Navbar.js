@@ -2,8 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { auth } from '@/backend/Firebase';
-import { signOut } from 'firebase/auth';
+
 import { useStateContext } from '@/context/StateContext';
 
 const Navbar = () => {
@@ -27,15 +26,14 @@ const Navbar = () => {
         
         <NavLinks>
         <NavLink href="/">Home</NavLink>
+        <NavLink href="/how-it-works">How It Works</NavLink>
           <NavLink href="/explore">Explore</NavLink>
-          <NavLink href="/how-it-works">How It Works</NavLink>
-          <NavLink href="/marketplace">Marketplace</NavLink>
+          <NavLink href="/dashboard">Dashboard</NavLink>
           <NavLink href="/about">About</NavLink>
         </NavLinks>
         
         <AuthLinks>
-          <LogInLink href="/login">Log In</LogInLink>
-          <SignUpLink href="/signup">Sign Up</SignUpLink>
+          <SignUpLink href="/signup">Connect Wallet</SignUpLink>
         </AuthLinks>
       </NavContent>
     </Nav>
