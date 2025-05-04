@@ -291,7 +291,7 @@ const Dashboard = () => {
             Join thousands of creators and brands who are building profitable partnerships on CreatorChain.
           </CTADescription>
           <CTAButtons>
-            <WhiteButton href="/signup">Create Account</WhiteButton>
+            <WhiteButton href="/dashboard">Connect Wallet</WhiteButton>
             <OutlineButton href="/how-it-works">Learn More</OutlineButton>
           </CTAButtons>
         </CTAContainer>
