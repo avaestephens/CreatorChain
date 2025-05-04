@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useSponsorshipContext } from '../../context/useSponsorshipContext';
 import HomeTemplate from './HomeTemplate';
+import Link from 'next/link';
 import CreateAgreementButton from '../CreateAgreementButton';
 
 export default function BrandView() {

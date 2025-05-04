@@ -33,7 +33,7 @@ const Navbar = () => {
         </NavLinks>
         
         <AuthLinks>
-          <SignUpLink href="/signup">Connect Wallet</SignUpLink>
+          <SignUpLink href="/dashboard">Connect Wallet</SignUpLink>
         </AuthLinks>
       </NavContent>
     </Nav>
