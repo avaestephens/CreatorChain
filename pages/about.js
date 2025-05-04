@@ -30,7 +30,7 @@ const About = () => {
           <TeamTitle>Meet the Team</TeamTitle>
           <TeamGrid>
             <TeamMemberCard>
-              <TeamMemberImage src="/api/placeholder/300/300" alt="Team Member" />
+              <TeamMemberImage src="/images/ceo.jpg" alt="Team Member" />
               <TeamMemberName>Ava Stephens</TeamMemberName>
               <TeamMemberRole>Founder & CEO</TeamMemberRole>
             </TeamMemberCard>

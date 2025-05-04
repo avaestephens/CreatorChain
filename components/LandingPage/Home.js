@@ -94,8 +94,8 @@ const Dashboard = () => {
                 A decentralized marketplace for influencers to secure sponsorships with brands through smart contract-based deals. Protect your content ownership and ensure transparent payments.
               </HeroDescription>
               <ButtonGroup>
-                <PrimaryButton href="/creators">I'm a Creator</PrimaryButton>
-                <SecondaryButton href="/brands">I'm a Brand</SecondaryButton>
+                <PrimaryButton href="/dashboard">I'm a Creator</PrimaryButton>
+                <SecondaryButton href="/dashboard">I'm a Brand</SecondaryButton>
               </ButtonGroup>
             </HeroContent>
             
@@ -110,7 +110,7 @@ const Dashboard = () => {
                   
                   <CreatorProfile>
                     <ProfileImage>
-                      <img src="/api/placeholder/100/100" alt="Creator" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      <img src="/images/avask8.png" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                     </ProfileImage>
                     <div>
                       <CreatorName>ava.sk8</CreatorName>
@@ -119,7 +119,7 @@ const Dashboard = () => {
                   </CreatorProfile>
                   
                   <ContractBox>
-                    <ContractTitle>Contract with <BrandName>SkateCo</BrandName></ContractTitle>
+                    <ContractTitle>Contract with <BrandName>lululemon</BrandName></ContractTitle>
                     <VerificationTag>
                       <CheckCircleIcon /> <span style={{ marginLeft: '4px' }}>Verified on blockchain</span>
                     </VerificationTag>
@@ -210,10 +210,10 @@ const Dashboard = () => {
           
           <CreatorsGrid>
             {[
-              { name: "Ava.sk8", followers: "200k", niche: "Figure Skating", img: "/api/placeholder/300/300" },
-              { name: "TechGuru", followers: "845K", niche: "Technology", img: "/api/placeholder/300/300" },
-              { name: "FitWithJamie", followers: "2.3M", niche: "Fitness", img: "/api/placeholder/300/300" },
-              { name: "CookingWithAlex", followers: "962K", niche: "Cooking", img: "/api/placeholder/300/300" }
+              { name: "ava.sk8", followers: "200k", niche: "Figure Skating", img: "/images/avask82.jpg" },
+              { name: "duolingo", followers: "16.9M", niche: "Learning", img: "/images/duo.jpg" },
+              { name: "MrBeast", followers: "115.3M", niche: "Games", img: "/images/beast.jpg" },
+              { name: "barstoolsports", followers: "46.9M", niche: "Digital Media", img: "/images/barstool.jpg" }
             ].map((creator, index) => (
               <CreatorCard key={index}>
                 <CreatorImageContainer>

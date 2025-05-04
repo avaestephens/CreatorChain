@@ -639,23 +639,208 @@
 
 
 
-import React from 'react';
+// import React from 'react';
+// import styled from 'styled-components';
+
+// const CreatorView = () => {
+//   return (
+//     <Container>
+//       <Header>
+//         <Title>Creator Dashboard</Title>
+//         <Subtitle>Manage your brand partnerships and campaigns</Subtitle>
+//       </Header>
+      
+//       <Section>
+//         <SectionTitle>Current Partnerships</SectionTitle>
+//         <EmptyState>
+//           <EmptyStateText>You don't have any active partnerships yet.</EmptyStateText>
+//           <Button>Browse Opportunities</Button>
+//         </EmptyState>
+//       </Section>
+      
+//       <Section>
+//         <SectionTitle>Campaign Performance</SectionTitle>
+//         <EmptyState>
+//           <EmptyStateText>No campaign data to display.</EmptyStateText>
+//           <Button>View Analytics</Button>
+//         </EmptyState>
+//       </Section>
+      
+//       <Section>
+//         <SectionTitle>Payouts</SectionTitle>
+//         <EmptyState>
+//           <EmptyStateText>No pending or completed payouts.</EmptyStateText>
+//           <Button>Setup Payout Preferences</Button>
+//         </EmptyState>
+//       </Section>
+//     </Container>
+//   );
+// };
+
+// export default CreatorView;
+
+// // Styled components
+// const Container = styled.div`
+//   padding: 2rem;
+// `;
+
+// const Header = styled.div`
+//   margin-bottom: 2rem;
+// `;
+
+// const Title = styled.h1`
+//   font-size: 2rem;
+//   font-weight: 700;
+//   margin-bottom: 0.5rem;
+// `;
+
+// const Subtitle = styled.p`
+//   font-size: 1rem;
+//   color: #a0aec0;
+// `;
+
+// const Section = styled.div`
+//   background-color: #1a202c;
+//   border-radius: 0.5rem;
+//   padding: 1.5rem;
+//   margin-bottom: 2rem;
+// `;
+
+// const SectionTitle = styled.h2`
+//   font-size: 1.25rem;
+//   font-weight: 600;
+//   margin-bottom: 1rem;
+// `;
+
+// const EmptyState = styled.div`
+//   text-align: center;
+//   padding: 3rem 0;
+// `;
+
+// const EmptyStateText = styled.p`
+//   color: #a0aec0;
+//   margin-bottom: 1rem;
+// `;
+
+// const Button = styled.button`
+//   background-color: #805ad5;
+//   color: white;
+//   padding: 0.5rem 1rem;
+//   border-radius: 0.375rem;
+//   font-weight: 500;
+//   cursor: pointer;
+  
+//   &:hover {
+//     background-color: #6b46c1;
+//   }
+// `;
+
+
+
+
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useSponsorshipContext } from '../../context/useSponsorshipContext';
 
 const CreatorView = () => {
+  const { walletAddress, logout, getAvailableContracts, signContract } = useSponsorshipContext();
+  const [availableContracts, setAvailableContracts] = useState([]);
+  const [activePartnerships, setActivePartnerships] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  
+  useEffect(() => {
+    // Fetch available contracts when component mounts
+    const fetchContracts = async () => {
+      setIsLoading(true);
+      try {
+        const contracts = await getAvailableContracts();
+        setAvailableContracts(contracts || []);
+      } catch (error) {
+        console.error("Error fetching available contracts:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    fetchContracts();
+  }, [getAvailableContracts]);
+  
+  const handleSignContract = async (contractId) => {
+    setIsLoading(true);
+    try {
+      await signContract(contractId);
+      // Refresh contracts after signing
+      const contracts = await getAvailableContracts();
+      setAvailableContracts(contracts || []);
+      // Update active partnerships
+      setActivePartnerships([...activePartnerships, contracts.find(c => c.id === contractId)]);
+    } catch (error) {
+      console.error("Error signing contract:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <Container>
       <Header>
         <Title>Creator Dashboard</Title>
         <Subtitle>Manage your brand partnerships and campaigns</Subtitle>
+        <WalletInfo>
+          <WalletAddress>
+            {walletAddress?.substring(0, 6)}...{walletAddress?.substring(walletAddress.length - 4)}
+          </WalletAddress>
+          <LogoutButton onClick={logout}>Disconnect</LogoutButton>
+        </WalletInfo>
       </Header>
       
       <Section>
+        <SectionTitle>Available Opportunities</SectionTitle>
+        {isLoading ? (
+          <LoadingText>Loading available contracts...</LoadingText>
+        ) : availableContracts.length > 0 ? (
+          <ContractList>
+            {availableContracts.map(contract => (
+              <ContractCard key={contract.id}>
+                <ContractTitle>{contract.title}</ContractTitle>
+                <ContractDetail>Brand: {contract.brandName}</ContractDetail>
+                <ContractDetail>Offer: {contract.payment} {contract.tokenSymbol}</ContractDetail>
+                <ContractDetail>Duration: {contract.duration} days</ContractDetail>
+                <ContractActions>
+                  <ViewDetailsButton href={`/contracts/${contract.id}`}>View Details</ViewDetailsButton>
+                  <SignButton onClick={() => handleSignContract(contract.id)}>Sign Contract</SignButton>
+                </ContractActions>
+              </ContractCard>
+            ))}
+          </ContractList>
+        ) : (
+          <EmptyState>
+            <EmptyStateText>No available opportunities at the moment.</EmptyStateText>
+            <Button href="/explore">Browse Marketplace</Button>
+          </EmptyState>
+        )}
+      </Section>
+      
+      <Section>
         <SectionTitle>Current Partnerships</SectionTitle>
-        <EmptyState>
-          <EmptyStateText>You don't have any active partnerships yet.</EmptyStateText>
-          <Button>Browse Opportunities</Button>
-        </EmptyState>
+        {activePartnerships.length > 0 ? (
+          <PartnershipList>
+            {activePartnerships.map(partnership => (
+              <PartnershipCard key={partnership.id}>
+                <PartnershipTitle>{partnership.title}</PartnershipTitle>
+                <PartnershipDetail>Brand: {partnership.brandName}</PartnershipDetail>
+                <PartnershipDetail>Status: {partnership.status}</PartnershipDetail>
+                <PartnershipDetail>Earnings: {partnership.payment} {partnership.tokenSymbol}</PartnershipDetail>
+                <ViewDetailsButton href={`/partnerships/${partnership.id}`}>View Details</ViewDetailsButton>
+              </PartnershipCard>
+            ))}
+          </PartnershipList>
+        ) : (
+          <EmptyState>
+            <EmptyStateText>You don't have any active partnerships yet.</EmptyStateText>
+            <Button>Browse Opportunities</Button>
+          </EmptyState>
+        )}
       </Section>
       
       <Section>
@@ -682,10 +867,15 @@ export default CreatorView;
 // Styled components
 const Container = styled.div`
   padding: 2rem;
+  color: #fff;
+  background-color: #000;
+  min-height: 100vh;
 `;
 
 const Header = styled.div`
   margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Title = styled.h1`
@@ -697,6 +887,34 @@ const Title = styled.h1`
 const Subtitle = styled.p`
   font-size: 1rem;
   color: #a0aec0;
+  margin-bottom: 1rem;
+`;
+
+const WalletInfo = styled.div`
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-top: 1rem;
+`;
+
+const WalletAddress = styled.span`
+  font-family: monospace;
+  background: #1a202c;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+`;
+
+const LogoutButton = styled.button`
+  background-color: #e53e3e;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #c53030;
+  }
 `;
 
 const Section = styled.div`
@@ -722,7 +940,72 @@ const EmptyStateText = styled.p`
   margin-bottom: 1rem;
 `;
 
-const Button = styled.button`
+const Button = styled.a`
+  background-color: #805ad5;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-block;
+  text-decoration: none;
+  
+  &:hover {
+    background-color: #6b46c1;
+  }
+`;
+
+const LoadingText = styled.p`
+  text-align: center;
+  color: #a0aec0;
+  padding: 2rem 0;
+`;
+
+const ContractList = styled.div`
+  display: grid;
+  gap: 1rem;
+`;
+
+const ContractCard = styled.div`
+  background-color: #2d3748;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+`;
+
+const ContractTitle = styled.h3`
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+`;
+
+const ContractDetail = styled.p`
+  color: #cbd5e0;
+  margin-bottom: 0.5rem;
+`;
+
+const ContractActions = styled.div`
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+`;
+
+const ViewDetailsButton = styled.a`
+  background-color: transparent;
+  border: 1px solid #805ad5;
+  color: #805ad5;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  
+  &:hover {
+    background-color: rgba(128, 90, 213, 0.1);
+  }
+`;
+
+const SignButton = styled.button`
   background-color: #805ad5;
   color: white;
   padding: 0.5rem 1rem;
@@ -733,4 +1016,27 @@ const Button = styled.button`
   &:hover {
     background-color: #6b46c1;
   }
+`;
+
+const PartnershipList = styled.div`
+  display: grid;
+  gap: 1rem;
+`;
+
+const PartnershipCard = styled.div`
+  background-color: #2d3748;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+`;
+
+const PartnershipTitle = styled.h3`
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+`;
+
+const PartnershipDetail = styled.p`
+  color: #cbd5e0;
+  margin-bottom: 0.5rem;
 `;

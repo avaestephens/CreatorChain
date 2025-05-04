@@ -1,19 +1,614 @@
+// import { useState, useEffect } from 'react';
+// import { useSponsorshipContext } from '../context/useSponsorshipContext';
+// import { useStateContext } from '@/context/StateContext';
+// import styled from 'styled-components';
+// import Link from 'next/link';
+// import { useRouter } from 'next/router';
+// import dynamic from 'next/dynamic';
+
+// // Import the contract ABI
+// import SponsorshipABI from '../backend/contracts/SponsorshipAgreement.json';
+
+// // Dynamically import ethers with no SSR to avoid Next.js errors
+// const ethers = dynamic(() => import('ethers'), { ssr: false });
+
+// export default function DealForm() {
+//   const router = useRouter();
+//   const { walletAddress, isConnected, connectWallet } = useSponsorshipContext();
+//   const { user } = useStateContext();
+  
+//   const [contractAddress, setContractAddress] = useState(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "0x123..."); // Replace with your deployed contract address
+//   const [formData, setFormData] = useState({
+//     title: '',
+//     description: '',
+//     paymentAmount: '',
+//     deliverables: '',
+//     creatorAddress: '',
+//     deadline: ''
+//   });
+  
+//   const [isSubmitting, setIsSubmitting] = useState(false);
+//   const [errors, setErrors] = useState({});
+//   const [step, setStep] = useState(1);
+//   const [transactionHash, setTransactionHash] = useState('');
+
+//   // Validation function that doesn't rely on ethers being available during SSR
+//   const validateForm = () => {
+//     const newErrors = {};
+    
+//     if (!formData.title.trim()) newErrors.title = 'Title is required';
+//     if (!formData.description.trim()) newErrors.description = 'Description is required';
+//     if (!formData.paymentAmount || parseFloat(formData.paymentAmount) <= 0) {
+//       newErrors.paymentAmount = 'Valid payment amount is required';
+//     }
+//     if (!formData.deliverables.trim()) newErrors.deliverables = 'Deliverables are required';
+    
+//     // Basic address validation without ethers
+//     if (!formData.creatorAddress || !formData.creatorAddress.startsWith('0x') || formData.creatorAddress.length !== 42) {
+//       newErrors.creatorAddress = 'Valid creator wallet address is required';
+//     }
+    
+//     if (!formData.deadline) newErrors.deadline = 'Deadline is required';
+    
+//     // Ensure deadline is in the future
+//     if (formData.deadline && new Date(formData.deadline) <= new Date()) {
+//       newErrors.deadline = 'Deadline must be in the future';
+//     }
+    
+//     setErrors(newErrors);
+//     return Object.keys(newErrors).length === 0;
+//   };
+
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData(prev => ({ ...prev, [name]: value }));
+    
+//     // Clear error when field is edited
+//     if (errors[name]) {
+//       setErrors(prev => ({ ...prev, [name]: null }));
+//     }
+//   };
+
+//   const connectToWallet = async () => {
+//     if (!isConnected) {
+//       await connectWallet();
+//     }
+//   };
+
+//   const createDeal = async () => {
+//     if (!validateForm()) return;
+    
+//     if (!isConnected) {
+//       alert("Please connect your wallet first");
+//       return;
+//     }
+    
+//     setIsSubmitting(true);
+    
+//     try {
+//       // Ensure ethers is available in client-side only
+//       if (typeof window !== 'undefined' && window.ethereum) {
+//         const ethersInstance = await import('ethers');
+//         const provider = new ethersInstance.providers.Web3Provider(window.ethereum);
+//         const signer = provider.getSigner();
+        
+//         const contract = new ethersInstance.Contract(
+//           contractAddress,
+//           SponsorshipABI.abi,
+//           signer
+//         );
+        
+//         // Calculate deadline timestamp in seconds
+//         const deadlineTimestamp = Math.floor(new Date(formData.deadline).getTime() / 1000);
+        
+//         // Store deal metadata in IPFS or similar service (mock implementation)
+//         const dealMetadata = {
+//           title: formData.title,
+//           description: formData.description,
+//           deliverables: formData.deliverables,
+//           createdAt: new Date().toISOString(),
+//         };
+        
+//         // In a real implementation, you would upload to IPFS here
+//         console.log("Deal metadata to be stored:", dealMetadata);
+        
+//         // Call smart contract function
+//         const tx = await contract.createDeal(
+//           formData.creatorAddress,
+//           deadlineTimestamp,
+//           { 
+//             value: ethersInstance.utils.parseEther(formData.paymentAmount),
+//             gasLimit: 3000000
+//           }
+//         );
+        
+//         setTransactionHash(tx.hash);
+//         setStep(2);
+        
+//         // Wait for transaction confirmation
+//         await tx.wait();
+//         console.log("Transaction confirmed:", tx.hash);
+//       } else {
+//         throw new Error("Ethereum provider not available");
+//       }
+      
+//     } catch (error) {
+//       console.error("Error creating deal:", error);
+//       alert(`Error creating deal: ${error.message || 'Transaction failed'}`);
+//     } finally {
+//       setIsSubmitting(false);
+//     }
+//   };
+
+//   const goToDashboard = () => {
+//     router.push('/dashboard');
+//   };
+
+//   return (
+//     <FormContainer>
+//       {step === 1 ? (
+//         <>
+//           <FormHeader>
+//             <FormTitle>Create <GradientText>Sponsorship Deal</GradientText></FormTitle>
+//             <FormDescription>
+//               Set up a new blockchain-backed sponsorship agreement with a creator
+//             </FormDescription>
+//           </FormHeader>
+          
+//           <FormBody>
+//             <FormGroup>
+//               <Label htmlFor="title">Deal Title</Label>
+//               <Input
+//                 type="text"
+//                 id="title"
+//                 name="title"
+//                 value={formData.title}
+//                 onChange={handleChange}
+//                 placeholder="e.g., Instagram Promotion for New Product"
+//                 error={errors.title}
+//               />
+//               {errors.title && <ErrorText>{errors.title}</ErrorText>}
+//             </FormGroup>
+            
+//             <FormGroup>
+//               <Label htmlFor="description">Description</Label>
+//               <Textarea
+//                 id="description"
+//                 name="description"
+//                 value={formData.description}
+//                 onChange={handleChange}
+//                 placeholder="Describe the sponsorship deal and expectations"
+//                 rows={4}
+//                 error={errors.description}
+//               />
+//               {errors.description && <ErrorText>{errors.description}</ErrorText>}
+//             </FormGroup>
+            
+//             <FormRow>
+//               <FormGroup>
+//                 <Label htmlFor="paymentAmount">Payment Amount (ETH)</Label>
+//                 <Input
+//                   type="number"
+//                   id="paymentAmount"
+//                   name="paymentAmount"
+//                   value={formData.paymentAmount}
+//                   onChange={handleChange}
+//                   step="0.01"
+//                   min="0"
+//                   placeholder="0.1"
+//                   error={errors.paymentAmount}
+//                 />
+//                 {errors.paymentAmount && <ErrorText>{errors.paymentAmount}</ErrorText>}
+//               </FormGroup>
+              
+//               <FormGroup>
+//                 <Label htmlFor="deadline">Completion Deadline</Label>
+//                 <Input
+//                   type="date"
+//                   id="deadline"
+//                   name="deadline"
+//                   value={formData.deadline}
+//                   onChange={handleChange}
+//                   error={errors.deadline}
+//                 />
+//                 {errors.deadline && <ErrorText>{errors.deadline}</ErrorText>}
+//               </FormGroup>
+//             </FormRow>
+            
+//             <FormGroup>
+//               <Label htmlFor="deliverables">Deliverables</Label>
+//               <Textarea
+//                 id="deliverables"
+//                 name="deliverables"
+//                 value={formData.deliverables}
+//                 onChange={handleChange}
+//                 placeholder="List required content, posts, etc."
+//                 rows={3}
+//                 error={errors.deliverables}
+//               />
+//               {errors.deliverables && <ErrorText>{errors.deliverables}</ErrorText>}
+//             </FormGroup>
+            
+//             <FormGroup>
+//               <Label htmlFor="creatorAddress">Creator's Wallet Address</Label>
+//               <Input
+//                 type="text"
+//                 id="creatorAddress"
+//                 name="creatorAddress"
+//                 value={formData.creatorAddress}
+//                 onChange={handleChange}
+//                 placeholder="0x..."
+//                 error={errors.creatorAddress}
+//               />
+//               {errors.creatorAddress && <ErrorText>{errors.creatorAddress}</ErrorText>}
+//             </FormGroup>
+            
+//             <ButtonWrapper>
+//               {!isConnected ? (
+//                 <PrimaryButton onClick={connectToWallet}>
+//                   Connect Wallet to Continue
+//                 </PrimaryButton>
+//               ) : (
+//                 <PrimaryButton 
+//                   onClick={createDeal}
+//                   disabled={isSubmitting}
+//                 >
+//                   {isSubmitting ? 'Creating Deal...' : 'Create Sponsorship Deal'}
+//                 </PrimaryButton>
+//               )}
+//             </ButtonWrapper>
+            
+//             <DetailsText>
+//               This will create a smart contract on the Ethereum blockchain. You'll need to confirm the transaction in your wallet and pay gas fees.
+//             </DetailsText>
+//           </FormBody>
+//         </>
+//       ) : (
+//         <SuccessContainer>
+//           <SuccessIcon>✓</SuccessIcon>
+//           <SuccessTitle>Deal Created Successfully!</SuccessTitle>
+//           <SuccessText>
+//             Your sponsorship deal has been submitted to the blockchain. The creator will be notified and can review the terms.
+//           </SuccessText>
+          
+//           {transactionHash && (
+//             <TransactionInfo>
+//               <span>Transaction Hash:</span>
+//               <TransactionHash>{transactionHash}</TransactionHash>
+//               <TransactionLink href={`https://etherscan.io/tx/${transactionHash}`} target="_blank" rel="noopener noreferrer">
+//                 View on Etherscan
+//               </TransactionLink>
+//             </TransactionInfo>
+//           )}
+          
+//           <ButtonWrapper>
+//             <PrimaryButton onClick={goToDashboard}>
+//               Go to Dashboard
+//             </PrimaryButton>
+//           </ButtonWrapper>
+//         </SuccessContainer>
+//       )}
+//     </FormContainer>
+//   );
+// }
+
+// import { useState, useEffect } from 'react';
+// import { useSponsorshipContext } from '../context/useSponsorshipContext';
+// import { useStateContext } from '@/context/StateContext';
+// import styled from 'styled-components';
+// import Link from 'next/link';
+// import { useRouter } from 'next/router';
+
+// // Import the contract ABI
+// import SponsorshipABI from '../backend/contracts/SponsorshipAgreement.json';
+
+// // Import ethers directly, but only use it on the client side
+// import * as ethers from 'ethers';
+
+// export default function DealForm() {
+//   const router = useRouter();
+//   const { walletAddress, isConnected, connectWallet } = useSponsorshipContext();
+//   const { user } = useStateContext();
+  
+//   const [contractAddress, setContractAddress] = useState(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "0x123..."); // Replace with your deployed contract address
+//   const [formData, setFormData] = useState({
+//     title: '',
+//     description: '',
+//     paymentAmount: '',
+//     deliverables: '',
+//     creatorAddress: '',
+//     deadline: ''
+//   });
+  
+//   const [isSubmitting, setIsSubmitting] = useState(false);
+//   const [errors, setErrors] = useState({});
+//   const [step, setStep] = useState(1);
+//   const [transactionHash, setTransactionHash] = useState('');
+
+//   // Validation function that doesn't rely on ethers being available during SSR
+//   const validateForm = () => {
+//     const newErrors = {};
+    
+//     if (!formData.title.trim()) newErrors.title = 'Title is required';
+//     if (!formData.description.trim()) newErrors.description = 'Description is required';
+//     if (!formData.paymentAmount || parseFloat(formData.paymentAmount) <= 0) {
+//       newErrors.paymentAmount = 'Valid payment amount is required';
+//     }
+//     if (!formData.deliverables.trim()) newErrors.deliverables = 'Deliverables are required';
+    
+//     // Basic address validation without ethers
+//     if (!formData.creatorAddress || !formData.creatorAddress.startsWith('0x') || formData.creatorAddress.length !== 42) {
+//       newErrors.creatorAddress = 'Valid creator wallet address is required';
+//     }
+    
+//     if (!formData.deadline) newErrors.deadline = 'Deadline is required';
+    
+//     // Ensure deadline is in the future
+//     if (formData.deadline && new Date(formData.deadline) <= new Date()) {
+//       newErrors.deadline = 'Deadline must be in the future';
+//     }
+    
+//     setErrors(newErrors);
+//     return Object.keys(newErrors).length === 0;
+//   };
+
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData(prev => ({ ...prev, [name]: value }));
+    
+//     // Clear error when field is edited
+//     if (errors[name]) {
+//       setErrors(prev => ({ ...prev, [name]: null }));
+//     }
+//   };
+
+//   const connectToWallet = async () => {
+//     if (!isConnected) {
+//       await connectWallet();
+//     }
+//   };
+
+//   const createDeal = async () => {
+//     if (!validateForm()) return;
+    
+//     if (!isConnected) {
+//       alert("Please connect your wallet first");
+//       return;
+//     }
+    
+//     setIsSubmitting(true);
+    
+//     try {
+//       // Check if we're in browser and ethereum is available
+//       if (typeof window === 'undefined' || !window.ethereum) {
+//         throw new Error("Ethereum provider not available. Please install MetaMask or another Web3 wallet.");
+//       }
+      
+//       // Create provider and signer
+//       const provider = new ethers.BrowserProvider(window.ethereum);
+//       const signer = await provider.getSigner();
+      
+//       // Instantiate the contract
+//       const contract = new ethers.Contract(
+//         contractAddress,
+//         SponsorshipABI.abi,
+//         signer
+//       );
+      
+//       // Calculate deadline timestamp in seconds
+//       const deadlineTimestamp = Math.floor(new Date(formData.deadline).getTime() / 1000);
+      
+//       // Store deal metadata in IPFS or similar service (mock implementation)
+//       const dealMetadata = {
+//         title: formData.title,
+//         description: formData.description,
+//         deliverables: formData.deliverables,
+//         createdAt: new Date().toISOString(),
+//       };
+      
+//       // In a real implementation, you would upload to IPFS here
+//       console.log("Deal metadata to be stored:", dealMetadata);
+      
+//       // Call smart contract function
+//       const tx = await contract.createDeal(
+//         formData.creatorAddress,
+//         deadlineTimestamp,
+//         { 
+//           value: ethers.parseEther(formData.paymentAmount),
+//           gasLimit: 3000000
+//         }
+//       );
+      
+//       setTransactionHash(tx.hash);
+//       setStep(2);
+      
+//       // Wait for transaction confirmation
+//       await tx.wait();
+//       console.log("Transaction confirmed:", tx.hash);
+//     } catch (error) {
+//       console.error("Error creating deal:", error);
+//       alert(`Error creating deal: ${error.message || 'Transaction failed'}`);
+//     } finally {
+//       setIsSubmitting(false);
+//     }
+//   };
+
+//   const goToDashboard = () => {
+//     router.push('/dashboard');
+//   };
+
+//   return (
+//     <FormContainer>
+//       {step === 1 ? (
+//         <>
+//           <FormHeader>
+//             <FormTitle>Create <GradientText>Sponsorship Deal</GradientText></FormTitle>
+//             <FormDescription>
+//               Set up a new blockchain-backed sponsorship agreement with a creator
+//             </FormDescription>
+//           </FormHeader>
+          
+//           <FormBody>
+//             <FormGroup>
+//               <Label htmlFor="title">Deal Title</Label>
+//               <Input
+//                 type="text"
+//                 id="title"
+//                 name="title"
+//                 value={formData.title}
+//                 onChange={handleChange}
+//                 placeholder="e.g., Instagram Promotion for New Product"
+//                 error={errors.title}
+//               />
+//               {errors.title && <ErrorText>{errors.title}</ErrorText>}
+//             </FormGroup>
+            
+//             <FormGroup>
+//               <Label htmlFor="description">Description</Label>
+//               <Textarea
+//                 id="description"
+//                 name="description"
+//                 value={formData.description}
+//                 onChange={handleChange}
+//                 placeholder="Describe the sponsorship deal and expectations"
+//                 rows={4}
+//                 error={errors.description}
+//               />
+//               {errors.description && <ErrorText>{errors.description}</ErrorText>}
+//             </FormGroup>
+            
+//             <FormRow>
+//               <FormGroup>
+//                 <Label htmlFor="paymentAmount">Payment Amount (ETH)</Label>
+//                 <Input
+//                   type="number"
+//                   id="paymentAmount"
+//                   name="paymentAmount"
+//                   value={formData.paymentAmount}
+//                   onChange={handleChange}
+//                   step="0.01"
+//                   min="0"
+//                   placeholder="0.1"
+//                   error={errors.paymentAmount}
+//                 />
+//                 {errors.paymentAmount && <ErrorText>{errors.paymentAmount}</ErrorText>}
+//               </FormGroup>
+              
+//               <FormGroup>
+//                 <Label htmlFor="deadline">Completion Deadline</Label>
+//                 <Input
+//                   type="date"
+//                   id="deadline"
+//                   name="deadline"
+//                   value={formData.deadline}
+//                   onChange={handleChange}
+//                   error={errors.deadline}
+//                 />
+//                 {errors.deadline && <ErrorText>{errors.deadline}</ErrorText>}
+//               </FormGroup>
+//             </FormRow>
+            
+//             <FormGroup>
+//               <Label htmlFor="deliverables">Deliverables</Label>
+//               <Textarea
+//                 id="deliverables"
+//                 name="deliverables"
+//                 value={formData.deliverables}
+//                 onChange={handleChange}
+//                 placeholder="List required content, posts, etc."
+//                 rows={3}
+//                 error={errors.deliverables}
+//               />
+//               {errors.deliverables && <ErrorText>{errors.deliverables}</ErrorText>}
+//             </FormGroup>
+            
+//             <FormGroup>
+//               <Label htmlFor="creatorAddress">Creator's Wallet Address</Label>
+//               <Input
+//                 type="text"
+//                 id="creatorAddress"
+//                 name="creatorAddress"
+//                 value={formData.creatorAddress}
+//                 onChange={handleChange}
+//                 placeholder="0x..."
+//                 error={errors.creatorAddress}
+//               />
+//               {errors.creatorAddress && <ErrorText>{errors.creatorAddress}</ErrorText>}
+//             </FormGroup>
+            
+//             <ButtonWrapper>
+//               {!isConnected ? (
+//                 <PrimaryButton onClick={connectToWallet}>
+//                   Connect Wallet to Continue
+//                 </PrimaryButton>
+//               ) : (
+//                 <PrimaryButton 
+//                   onClick={createDeal}
+//                   disabled={isSubmitting}
+//                 >
+//                   {isSubmitting ? 'Creating Deal...' : 'Create Sponsorship Deal'}
+//                 </PrimaryButton>
+//               )}
+//             </ButtonWrapper>
+            
+//             <DetailsText>
+//               This will create a smart contract on the Ethereum blockchain. You'll need to confirm the transaction in your wallet and pay gas fees.
+//             </DetailsText>
+//           </FormBody>
+//         </>
+//       ) : (
+//         <SuccessContainer>
+//           <SuccessIcon>✓</SuccessIcon>
+//           <SuccessTitle>Deal Created Successfully!</SuccessTitle>
+//           <SuccessText>
+//             Your sponsorship deal has been submitted to the blockchain. The creator will be notified and can review the terms.
+//           </SuccessText>
+          
+//           {transactionHash && (
+//             <TransactionInfo>
+//               <span>Transaction Hash:</span>
+//               <TransactionHash>{transactionHash}</TransactionHash>
+//               <TransactionLink href={`https://etherscan.io/tx/${transactionHash}`} target="_blank" rel="noopener noreferrer">
+//                 View on Etherscan
+//               </TransactionLink>
+//             </TransactionInfo>
+//           )}
+          
+//           <ButtonWrapper>
+//             <PrimaryButton onClick={goToDashboard}>
+//               Go to Dashboard
+//             </PrimaryButton>
+//           </ButtonWrapper>
+//         </SuccessContainer>
+//       )}
+//     </FormContainer>
+//   );
+// }
+
 
 import { useState, useEffect } from 'react';
 import { useSponsorshipContext } from '../context/useSponsorshipContext';
 import { useStateContext } from '@/context/StateContext';
-import { ethers } from 'ethers';
 import styled from 'styled-components';
 import Link from 'next/link';
-import SponsorshipABI from '../backend/contracts/SponsorshipAgreement.json';
 import { useRouter } from 'next/router';
+
+// Import the contract ABI
+import SponsorshipABI from '../backend/contracts/SponsorshipAgreement.json';
+
+// Import ethers directly, but only use it on the client side
+import * as ethers from 'ethers';
 
 export default function DealForm() {
   const router = useRouter();
   const { walletAddress, isConnected, connectWallet } = useSponsorshipContext();
   const { user } = useStateContext();
   
-  const [contractAddress, setContractAddress] = useState(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "0x123..."); // Replace with your deployed contract address
+  // Fix 1: Use a valid Ethereum address format for the fallback
+  const [contractAddress, setContractAddress] = useState(
+    process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "0x0000000000000000000000000000000000000000"
+  ); 
+  
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -28,6 +623,7 @@ export default function DealForm() {
   const [step, setStep] = useState(1);
   const [transactionHash, setTransactionHash] = useState('');
 
+  // Validation function that doesn't rely on ethers being available during SSR
   const validateForm = () => {
     const newErrors = {};
     
@@ -37,9 +633,12 @@ export default function DealForm() {
       newErrors.paymentAmount = 'Valid payment amount is required';
     }
     if (!formData.deliverables.trim()) newErrors.deliverables = 'Deliverables are required';
-    if (!formData.creatorAddress || !ethers.utils.isAddress(formData.creatorAddress)) {
+    
+    // Basic address validation without ethers
+    if (!formData.creatorAddress || !formData.creatorAddress.startsWith('0x') || formData.creatorAddress.length !== 42) {
       newErrors.creatorAddress = 'Valid creator wallet address is required';
     }
+    
     if (!formData.deadline) newErrors.deadline = 'Deadline is required';
     
     // Ensure deadline is in the future
@@ -78,9 +677,21 @@ export default function DealForm() {
     setIsSubmitting(true);
     
     try {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
+      // Check if we're in browser and ethereum is available
+      if (typeof window === 'undefined' || !window.ethereum) {
+        throw new Error("Ethereum provider not available. Please install MetaMask or another Web3 wallet.");
+      }
       
+      // Create provider and signer
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+      
+      // Fix 2: Added contract address validation
+      if (!ethers.isAddress(contractAddress)) {
+        throw new Error("Invalid contract address. Please check your environment configuration.");
+      }
+      
+      // Instantiate the contract
       const contract = new ethers.Contract(
         contractAddress,
         SponsorshipABI.abi,
@@ -101,12 +712,17 @@ export default function DealForm() {
       // In a real implementation, you would upload to IPFS here
       console.log("Deal metadata to be stored:", dealMetadata);
       
+      // Fix 3: Validate creator address
+      if (!ethers.isAddress(formData.creatorAddress)) {
+        throw new Error("Invalid creator address format");
+      }
+      
       // Call smart contract function
       const tx = await contract.createDeal(
         formData.creatorAddress,
         deadlineTimestamp,
         { 
-          value: ethers.utils.parseEther(formData.paymentAmount),
+          value: ethers.parseEther(formData.paymentAmount),
           gasLimit: 3000000
         }
       );
@@ -117,7 +733,6 @@ export default function DealForm() {
       // Wait for transaction confirmation
       await tx.wait();
       console.log("Transaction confirmed:", tx.hash);
-      
     } catch (error) {
       console.error("Error creating deal:", error);
       alert(`Error creating deal: ${error.message || 'Transaction failed'}`);
@@ -129,6 +744,11 @@ export default function DealForm() {
   const goToDashboard = () => {
     router.push('/dashboard');
   };
+
+  // Fix 4: Added useEffect to log contract address for debugging
+  useEffect(() => {
+    console.log("Contract address:", contractAddress);
+  }, [contractAddress]);
 
   return (
     <FormContainer>
@@ -277,6 +897,13 @@ export default function DealForm() {
     </FormContainer>
   );
 }
+
+
+
+
+
+
+
 
 const FormContainer = styled.div`
   background-color: #1a202c;
