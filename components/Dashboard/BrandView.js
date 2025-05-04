@@ -484,90 +484,244 @@
 
 
 
-import React from 'react';
-import styled from 'styled-components';
+// import React from 'react';
+// import styled from 'styled-components';
+// import { useSponsorshipContext } from '../../context/useSponsorshipContext';
 
-const BrandView = () => {
+// const BrandView = () => {
+//   const { createCampaign, findCreators } = useSponsorshipContext();
+  
+//   const handleCreateCampaign = async () => {
+//     try {
+//       await createCampaign();
+//     } catch (error) {
+//       console.error("Error creating campaign:", error);
+//     }
+//   };
+  
+//   const handleFindCreators = async () => {
+//     try {
+//       await findCreators();
+//     } catch (error) {
+//       console.error("Error finding creators:", error);
+//     }
+//   };
+
+//   return (
+//     <Container>
+//       <Header>
+//         <Title>Brand Dashboard</Title>
+//         <Subtitle>Manage your creator partnerships</Subtitle>
+//       </Header>
+      
+//       <Section>
+//         <SectionTitle>Active Campaigns</SectionTitle>
+//         <EmptyState>
+//           <EmptyStateText>You don't have any active campaigns yet.</EmptyStateText>
+//           <Button onClick={handleCreateCampaign}>Create Campaign</Button>
+//         </EmptyState>
+//       </Section>
+      
+//       <Section>
+//         <SectionTitle>Creator Partnerships</SectionTitle>
+//         <EmptyState>
+//           <EmptyStateText>You haven't partnered with any creators yet.</EmptyStateText>
+//           <Button onClick={handleFindCreators}>Find Creators</Button>
+//         </EmptyState>
+//       </Section>
+//     </Container>
+//   );
+// };
+
+// export default BrandView;
+
+// // Styled components remain the same
+
+// // Styled components
+// const Container = styled.div`
+//   padding: 2rem;
+// `;
+
+// const Header = styled.div`
+//   margin-bottom: 2rem;
+// `;
+
+// const Title = styled.h1`
+//   font-size: 2rem;
+//   font-weight: 700;
+//   margin-bottom: 0.5rem;
+// `;
+
+// const Subtitle = styled.p`
+//   font-size: 1rem;
+//   color: #a0aec0;
+// `;
+
+// const Section = styled.div`
+//   background-color: #1a202c;
+//   border-radius: 0.5rem;
+//   padding: 1.5rem;
+//   margin-bottom: 2rem;
+// `;
+
+// const SectionTitle = styled.h2`
+//   font-size: 1.25rem;
+//   font-weight: 600;
+//   margin-bottom: 1rem;
+// `;
+
+// const EmptyState = styled.div`
+//   text-align: center;
+//   padding: 3rem 0;
+// `;
+
+// const EmptyStateText = styled.p`
+//   color: #a0aec0;
+//   margin-bottom: 1rem;
+// `;
+
+// const Button = styled.button`
+//   background-color: #3182ce;
+//   color: white;
+//   padding: 0.5rem 1rem;
+//   border-radius: 0.375rem;
+//   font-weight: 500;
+//   cursor: pointer;
+  
+//   &:hover {
+//     background-color: #2b6cb0;
+//   }
+// `;
+
+
+
+
+
+
+import { useState } from 'react';
+import styled from 'styled-components';
+import { useSponsorshipContext } from '../../context/useSponsorshipContext';
+import CreateAgreementButton from '../CreateAgreementButton';
+
+export default function BrandView() {
+  const { walletAddress, logout } = useSponsorshipContext();
+  const [activeDeals, setActiveDeals] = useState([]);
+
   return (
     <Container>
       <Header>
         <Title>Brand Dashboard</Title>
-        <Subtitle>Manage your creator partnerships</Subtitle>
+        <WalletInfo>
+          <WalletAddress>
+            {walletAddress?.substring(0, 6)}...{walletAddress?.substring(walletAddress.length - 4)}
+          </WalletAddress>
+          <LogoutButton onClick={logout}>Disconnect</LogoutButton>
+        </WalletInfo>
       </Header>
-      
+
+      <Actions>
+        <CreateDealButton as="a" href="/deals/create">Create New Deal</CreateDealButton>
+      </Actions>
+
       <Section>
-        <SectionTitle>Active Campaigns</SectionTitle>
-        <EmptyState>
-          <EmptyStateText>You don't have any active campaigns yet.</EmptyStateText>
-          <Button>Create Campaign</Button>
-        </EmptyState>
-      </Section>
-      
-      <Section>
-        <SectionTitle>Creator Partnerships</SectionTitle>
-        <EmptyState>
-          <EmptyStateText>You haven't partnered with any creators yet.</EmptyStateText>
-          <Button>Find Creators</Button>
-        </EmptyState>
+        <SectionTitle>Your Active Deals</SectionTitle>
+        {activeDeals.length > 0 ? (
+          <DealList>
+            {activeDeals.map(deal => (
+              <DealCard key={deal.id}>
+                <h3>{deal.title}</h3>
+                <p>Status: {deal.status}</p>
+                <a href={`/deals/${deal.id}`}>View Details</a>
+              </DealCard>
+            ))}
+          </DealList>
+        ) : (
+          <p>You don't have any active deals. Create your first deal to get started!</p>
+        )}
       </Section>
     </Container>
   );
-};
+}
 
-export default BrandView;
-
-// Styled components
+// Styled Components
 const Container = styled.div`
   padding: 2rem;
+  color: #fff;
+  background-color: #000;
+  min-height: 100vh;
 `;
 
 const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 2rem;
 `;
 
 const Title = styled.h1`
   font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
+  font-weight: bold;
 `;
 
-const Subtitle = styled.p`
-  font-size: 1rem;
-  color: #a0aec0;
+const WalletInfo = styled.div`
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 `;
 
-const Section = styled.div`
-  background-color: #1a202c;
-  border-radius: 0.5rem;
-  padding: 1.5rem;
-  margin-bottom: 2rem;
+const WalletAddress = styled.span`
+  font-family: monospace;
+  background: #1a202c;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
 `;
 
-const SectionTitle = styled.h2`
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-`;
-
-const EmptyState = styled.div`
-  text-align: center;
-  padding: 3rem 0;
-`;
-
-const EmptyStateText = styled.p`
-  color: #a0aec0;
-  margin-bottom: 1rem;
-`;
-
-const Button = styled.button`
-  background-color: #3182ce;
+const LogoutButton = styled.button`
+  background-color: #e53e3e;
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 0.375rem;
   font-weight: 500;
   cursor: pointer;
-  
+
+  &:hover {
+    background-color: #c53030;
+  }
+`;
+
+const Actions = styled.div`
+  margin-bottom: 2rem;
+`;
+
+const CreateDealButton = styled.button`
+  background-color: #3182ce;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+
   &:hover {
     background-color: #2b6cb0;
   }
+`;
+
+const Section = styled.div`
+  margin-top: 2rem;
+`;
+
+const SectionTitle = styled.h2`
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+`;
+
+const DealList = styled.div`
+  display: grid;
+  gap: 1rem;
+`;
+
+const DealCard = styled.div`
+  background-color: #1a202c;
+  padding: 1rem;
+  border-radius: 0.5rem;
 `;
